@@ -36,64 +36,71 @@
 	
 	\tableofcontents  % Table of Contents
 	\clearpage  % Start new page
-	
-	
+    
 	\newpage
-	\section{Chapter 3: Neural Network}
+	\section{Chapter 2: Deep Reinforcement Learning }
+    \setcounter{section}{2}
 
-    TODO: chapter introduce. 
-    
-    
-    \newpage
-	\subsection{Cost Function And Gradient Descent}
+    In this chapter, we begin our journey into deep learning, a field of importance across multiple industries and technical domains. Applications range from computer vision and natural language processing to speech recognition and reinforcement learning, So it's necessary to learn about it.
 
-    In this section, we will explore the core concept of the cost function through a practical example: predicting the click-rate of online products. We'll then learn its mathematical representation. The next question is how to minimize the value of the cost function. This leads us to the gradient descent algorithm, where we'll explore its basic concept and the mathematical techniques for solving it. Don't worry about the mathematics, all of the mathematical operations used in this section are elementary, and you won't need to spend a lot of time on them.
-    
-    
+In the first step, we will introduce cost functions and gradient descent, which are basic concepts that will serve as the foundation for the subsequent discussions.
+
+We'll then explore the architecture of neural models, drawing inspiration from biological neural mechanisms. We'll understand how to construct a neural network by connecting groups of neurons and how the inner workings of these networks. To enhance our understanding, we'll learn a comprehensive example of planar data classification and gain hands-on experience implementing neural networks using Python.
+
+With this foundation in place, we'll move on to more complicated operations within neural networks that will enable us to tackle more complex challenges. This includes integrating convolutional operations into neural networks to handle grid-based data such as images. In addition, we'll delve into recurrent constructions, allowing us to build recurrent neural networks for processing sequential data, such as audio clips and text sequences. Along with these discussions, we'll provide practical Python implementations for both types of neural networks, ensuring a comprehensive understanding of their basic components and core principles.
+
+
     \newpage
-	\subsubsection{Cost Function}
+	\subsection{Cost Function and Gradient Descent}
+
+    In this section, we will explore the core concept of the cost function through a practical example: predicting the click-rate of online products. We'll then learn its mathematical representation. The next question is how to minimize the value of the cost function. This leads us to the gradient descent algorithm, where we'll explore its basic concept and the mathematical techniques for solving it.\\
+
+    \noindent
+    \textbf{Cost Function}\\
+    \noindent
      We will learn the concept of cost function by solving a prediction problem. The problem is from the online shopping website, As is commonly observed, higher prices for a product lead to fewer clicks, resulting in a lower click rate. Our objective is to construct a model that predicts a product's click rate based on its price. Given a dataset containing various commodities' prices and their corresponding click rates, we can visualize this information in the figure below, with 'x' representing price and 'y' representing click rate.
-     
-     
+
+
      \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.6\textwidth]{figure/price_click_rate_noLine}
         \caption{product's Price And Click Rate}
      \end{figure}
-     
+
      \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.6\textwidth]{figure/price_click_rate}
         \caption{Product's Price And Click Rate}
      \end{figure}
-     
+
      It's important to note that there are several other factors that influence click rates. In practical scenarios, datasets tend to be more intricate. For the sake of clarity, we present a simplified example to facilitate a better understanding of the underlying concept.
-     
+
      From Figure 1,  we intuitively gather that perhaps a straight line could aptly represent the relationship between x and y as in Figure 2.Hence, we hypothesize that the data pattern follows a linear function, specifically $ y = \theta_{1} * x  + \theta_{0}$. In formal terms, theta represents the parameters of this function, which determines accuracy of the model.  So the next step is to choose values for the parameters so that the straight line can best fit the data.
 
-     For a clearer understanding, consider one example $(x_{i}, y_{i})$,   if the predicted value $y = f(x_{i})$ closer to the actual value $y_{i}$, the model is considered more accurate. The gap between the predicted value and the true value is referred to as the error, and we need to measure the error over the entire data set. Therefore, we sum the errors of each data point and square the sum. However, merely summing these errors may result in an inflation of errors with more data points. To counter this, we compute the average error, and for later calculate conveniency, we add divide by 2. 
-     
-  
+     For a clearer understanding, consider one example $(x_{i}, y_{i})$,   if the predicted value $y = f(x_{i})$ closer to the actual value $y_{i}$, the model is considered more accurate. The gap between the predicted value and the true value is referred to as the error, and we need to measure the error over the entire data set. Therefore, we sum the errors of each data point and square the sum. However, merely summing these errors may result in an inflation of errors with more data points. To counter this, we compute the average error, and for later calculate conveniency, we add divide by 2.
+
+
      \hspace*{\fill}
-     
+
      Hypothesis:
      $ y = \theta_{1} * x  + \theta_{0}$
      \hspace*{\fill}
-     
+
      \hspace*{\fill}
-     
+
      Cost Function:
      $J\left(\theta_0, \theta_1\right)=\frac{1}{2 m} \sum_{i=1}^m\left(h_\theta\left(x^{(i)}\right)-y^{(i)}\right)^2$
-     
+
      \hspace*{\fill}
-     
+
      The square error function is widely used, and in practice, the cost function can be designed depending on specific condition.
 
-    Our next goal is to find appropriate parameters that minimize the cost function J, making it as small as possible. In the next section, we will discuss how to address this challenge.
-    
-    
-    \newpage
-	\subsubsection{Gradient Descent}
+    Our next goal is to find appropriate parameters that minimize the cost function J, making it as small as possible. In the next section, we will discuss how to address this challenge.\\
+
+
+    \noindent
+    \textbf{Gradient Descent}\\
+    \noindent
     To solve the problem of minimizing the cost function your initial instinct might be to employ differentiation and set the result to zero, a method often used to find minimum or maximum of functions. However, this approach isn't always feasible, especially when dealing with a large number of parameters. Thus, we require a more systematic and versatile approach to identify parameters that minimize the cost function. This led to the discovery of the gradient descent algorithm, a highly effective method. It can be applied to a wide range of functions across various algorithms, making it a cornerstone in the field of machine learning.
 
 Let me first introduce the core idea and procedure of gradient descent, followed by presenting its mathematical formulation.
@@ -124,103 +131,85 @@ It's worth noting that some functions may exhibit complex shapes with multiple l
     For each parameter in each update step, calculated as the original value minus alpha times the derivative value. Here, alpha is the learning rate, which determines the size of each step in the descent. It typically ranges from 0 to 1. A larger alpha implies a more aggressive algorithm, taking larger steps and possibly overshooting the minimum. Conversely, a smaller alpha leads to smaller steps, reducing the chance of missing the minimum, but at the cost of slower convergence. Determining the appropriate learning rate requires several experimentation and experience. The derivative value indicates the steepest descent. Gradient Descent continues this process until the algorithm converges. Convergence means that the parameters have reached a local minimum of the cost function and no further adjustments are required. This implies that the error between predicted and true values is locally minimized.
 
     It is important to note that the parameters must be updated simultaneously. This can be succinctly expressed by the formula:
-     
+
      \hspace*{\fill}
-     
+
      $\begin{aligned} & \text { temp0 }:=\theta_0-\alpha \frac{\partial}{\partial \theta_0} J\left(\theta_0, \theta_1\right) \\ & \text { temp1 }:=\theta_1-\alpha \frac{\partial}{\partial \theta_1} J\left(\theta_0, \theta_1\right) \\ & \theta_0:=\text { temp0 } \\ & \theta_1:=\text { temp1 }\end{aligned}$
-     
+
      \hspace*{\fill}
-     
-     
+
+
      \newpage
 	\subsection{Neural Network}
 
-    The original concept of artificial intelligence was to create a machine with capabilities similar to the human brain. When we look at the human brain, even that of a ten-year-old child, we see a miracle. Not only does it process visual information and understand language and symbols, but it also formulates complex concepts and strategies. It also has a sense of logic and an understanding of time and space. This formidable organ is the driving force behind the progress of human civilization. Given this, if our goal is to construct an intelligent machine, why not draw inspiration from the human brain? Although a baby's brain lacks complete abilities, it is capable of performing tasks as complex as those of an adult brain through training. So perhaps we can design a machine that emulates the infant brain, coupled with a learning algorithm to teach it. Admittedly, our understanding of how the human brain works is also incomplet. The first hypothesis is that we would need to develop thousands of different algorithms to mimic different part of the brain. A second hypothesis suggesting that the brain functions as a vast neural network governed by a single learning algorithm. Neural rewiring experiments showed that a single piece of biological brain tissue could process visual, auditory, and tactile information. For example, both the auditory cortex and the somatosensory cortex showed the ability to learn to see. This suggested the existence of a universal learning algorithm capable of processing different types of data and autonomously acquiring a variety of skills. It was on this second hypothesis that the neural network was founded and eventually became widely accepted. So nerual netwrok experienced fluctuations in popularity throughout the 1980s and 1990s, followed by a decline in the late 1990s. However, recent years have seen a resurgence, driven by the exponential growth in computing power and data resources. Currently, neural networks are widely used in various industries, ranging from image object recognition, recommendation systems, speech recognition, and more.
-    
-    
-    \newpage
-	\subsubsection{Biological Neuron}
+    The original concept of artificial intelligence was to create a machine with capabilities similar to the human brain. When we look at the human brain, even that of a ten-year-old child, we see a miracle. Not only does it process visual information and understand language and symbols, but it also formulates complex concepts and strategies. It also has a sense of logic and an understanding of time and space. This formidable organ is the driving force behind the progress of human civilization. Given this, if our goal is to construct an intelligent machine, why not draw inspiration from the human brain? Although a baby's brain lacks complete abilities, it is capable of performing tasks as complex as those of an adult brain through training. So perhaps we can design a machine that emulates the infant brain, coupled with a learning algorithm to teach it. Admittedly, our understanding of how the human brain works is also incomplet. The first hypothesis is that we would need to develop thousands of different algorithms to mimic different part of the brain. A second hypothesis suggesting that the brain functions as a vast neural network governed by a single learning algorithm. Neural rewiring experiments showed that a single piece of biological brain tissue could process visual, auditory, and tactile information. For example, both the auditory cortex and the somatosensory cortex showed the ability to learn to see. This suggested the existence of a universal learning algorithm capable of processing different types of data and autonomously acquiring a variety of skills. It was on this second hypothesis that the neural network was founded and eventually became widely accepted. So nerual netwrok experienced fluctuations in popularity throughout the 1980s and 1990s, followed by a decline in the late 1990s. However, recent years have seen a resurgence, driven by the exponential growth in computing power and data resources. Currently, neural networks are widely used in various industries, ranging from image object recognition, recommendation systems, speech recognition, and more.\\
+
+
+    \textbf{Biological Neuron}\\
     Neurons are cells in the brain. Each neuron has dendrites, which serve to receive signals from other neurons. In structure and function, dendrites can be compared to the input wires of a system. They transmit information to the cell body, where it is processed. The processed information is then sent to other neurons through the axon, which is like an output wire. This communication between neurons occurs through pulses of electricity known as spikes, which consume little electricity. The axon connects to the dendrites of other neurons, allowing the transmission of spikes to neighboring cells. The message sent by the neuron can be either the processed result or the same information it originally received.
 
-    In simple terms, this is how the human body works. Our sensory organs, such as the eyes and ears, gather information from the external environment. This information is then transmitted to the brain through the interconnected network of neurons using electrical impulses. The brain then processes this information and sends the calculated results to the muscles and other organs.
+    In simple terms, this is how the human body works. Our sensory organs, such as the eyes and ears, gather information from the external environment. This information is then transmitted to the brain through the interconnected network of neurons using electrical impulses. The brain then processes this information and sends the calculated results to the muscles and other organs. \\
+    
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/biological-neural}
+        \caption{Biologic Neural}
+     \end{figure}
     
     
-    \newpage
-	\subsubsection{Neuron Model}
+    \noindent
+    \textbf{Neuron Model}\\
     We can think of a neuron as a computational unit. It receives information from an input structure, performs computations, and transmits the results to other nodes through an output structure.
 
     The following diagram illustrates our neuron model. The circle represents a neuron that receives input through input wires, performs computations, and then sends output values through output wires. These output values always pass through an activation function called $h_(\theta)$, which we will discuss later. The parameters of the model are referred to as $\theta$ or weights, and in most cases 'x' denotes input values. It's worth noting that both $\theta$ and x are typically represented as vectors.
-    
-    
+
+
     \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.6\textwidth]{figure/neural-model}
         \caption{Multi Local Minimum Function}
      \end{figure}
+
     
-    
+    \hspace*{\fill}
     \begin{mdframed}[hidealllines=false,backgroundcolor=white!20]
     \textbf{Activation Function}
-    
+
     In the neuron model, the neuron is only capable of linear computation. To import non-linear factors, we include an activation function. This allows the model to accommodate non-linear functions and execute more complex tasks.
-    
+
     \textbf{ Example of activation function}
-    
-    
+
+
         \hspace*{\fill}
-        
+
         Sigmoid Function:
         $f(x)=\sigma(x)=\frac{1}{1+e^{-x}}$
         \hspace*{\fill}
-        
-    
+
+
         \hspace*{\fill}
-        
+
         Tanh Function:
         $f(x)=\tanh (x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}$
         \hspace*{\fill}
-    
+
         \hspace*{\fill}
-        
+
         Relu Function:
         $f(x)= \begin{cases}0 & x<0 \\ x & x \geq 0\end{cases}$
         \hspace*{\fill}
-    
+
         \hspace*{\fill}
 
         Softmax Function:
         $y_i=\operatorname{soft} \max \left(x_i\right)=\frac{e^{x_i}}{\sum_{j=1}^k e^{x_j}}$
         \hspace*{\fill}
-    
+
 
     \end{mdframed}
-    
-    
-    \begin{comment}
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=0.6\textwidth]{figure/sigmod}
-        \caption{Sigmoid Function}
-        \end{figure}
-        
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=0.6\textwidth]{figure/tanh}
-        \caption{Tanh Function}
-        \end{figure}
-        
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=0.6\textwidth]{figure/relu}
-        \caption{Relu Function}
-        \end{figure}
-        
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=0.6\textwidth]{figure/softmax}
-        \caption{Softmax Function}
-        \end{figure}
-    \end{comment}
+
+
+
 
     \begin{figure}[htbp]
     \centering
@@ -247,25 +236,26 @@ It's worth noting that some functions may exhibit complex shapes with multiple l
     \caption{Softmax Function}
     \end{minipage}
     \end{figure}
-    
-    
-    \newpage
-	\subsubsection{Feedforward Neural Network}
-    
+
+
+    \noindent
+    \textbf{Feedforward Neural Network}\\
+    \noindent
+
     A number of neurals connected together form a neural network like in Figure 9.
-    
+
     \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.6\textwidth]{figure/NN-model}
         \caption{Neural Network}
         \end{figure}
-    
-    
+
+
 
     The first layer is called the input layer, and the last layer is called the output layer. The layers between the input and output layers are referred to as hidden layers.
 
     Now we have network model, it's important to understand the mathematical underpinnings of neural networks. Let me explain the notations used in the following explanation. $a^{(j)}_{i}$ denotes the activation of the neuron or unit $i$ in layer $j$. This activation is both computed and output by the unit. For example, $a^{(2)}_1$ denotes the activation of the first unit in layer 2. The symbol $\theta$ represents the parameters of the neural network, and it's a matrix. $\theta^{(j)}$ is a matrix that governs the functional mapping from the $(j-1)$th layer to the $j$th layer. Note that the bias term is ignored in the diagram, bias is a constant term used as $x_0, a_0$, representing a constant factor in functions. Whether to include a bias depends on the specific problem in practice. In the following example, we will explore how to include the bias term.
-    
+
 
     \begin{figure}[htbp]
         \centering
@@ -280,26 +270,26 @@ It's worth noting that some functions may exhibit complex shapes with multiple l
 
     \begin{mdframed}[hidealllines=false,backgroundcolor=white!20]
         \textbf{Vectorized implementation}\\
-        
+
         Vector equations give us a more efficient way to perform calculations.
         Set the bias term $x_0 = 1$, $a_0^{(2)}=1$\\
-    
+
 
         $x=\left[\begin{array}{l}x_0 \\ x_1 \\ x_2 \\ x_3\end{array}\right] \quad z^{(2)}=\left[\begin{array}{c}z_1^{(2)} \\ z_2^{(2)} \\ z_3^{(2)}\end{array}\right]$ \\
 
         $\begin{aligned} & z^{(2)}=\Theta^{(1)} x \\ & a^{(2)}=g\left(z^{(2)}\right)\end{aligned}$
-        
+
         $
         \begin{aligned}
         & z^{(3)}=\Theta^{(2)} a^{(2)} \\
         & h_{\Theta}(x)=a^{(3)}=g\left(z^{(3)}\right)
         \end{aligned}
         $
-        
+
         \hspace*{\fill}
-        
+
     \end{mdframed}
-    
+
     It's obvious that the process called forward propagation is beacuase the flow of computation: it begins with the input, traverses through the hidden layers, and end on the output layer.
 
 Need to pay attention, the bias term is ignored in the diagram, bias is a constant term used as $x_0, a_0$, representing a constant factor in functions. The decision to include a bias depends on the specific problem at hand. In the subsequent example, we will explore how to incorporate the bias term.
@@ -309,12 +299,12 @@ Through the computational steps outlined, we gain insight into how a neural netw
 The input variables are also called features. A neural network can be used to predict target variables or to classify data. This involves learning patterns from the input features, which are then applied to the prediction or classification task. In some cases, the task may be complex and the data may be large and complicated. How can a neural network extract distinctive and valuable patterns from such data? This is a critical question. Both feature design and network structure need to be considered. But even from our simplified structure above, it is clear that the architecture of a neural network plays a critical role in answering this question. The neural network can reveal more complex and deeper patterns in the data due to the presence of hidden layers. If we were to remove these hidden layers, the structure would essentially be reduced to an activation function. The hidden layers have the ability to perform intricate and deep combinations of the output from the previous layers. By incorporating additional hidden layers, the neural network can go beyond the surface patterns in the data to reveal deeper and more substantial patterns. These are often elusive to human observers when dealing with large data sets.
 
 
-\begin{mdframed}[hidealllines=true,backgroundcolor=gray!20]
-\textbf{Planar Data Classification}
+\newpage
+	\subsubsection{Planar Data Classification}
 
-In this example, we will train a single hidden layer neural network to classify the planar dataset, which is a public dataset with the shape of a flower. You can use this example to learn how to implement a neural network using Python: 
 
-\end{mdframed}
+In this example, we will train a single hidden layer neural network to classify the planar dataset, which is a public dataset with the shape of a flower. You can use this example to learn how to implement a neural network using Python:
+
 
 \lstset{
    	language=Python, % Set the language for the code
@@ -338,19 +328,19 @@ from testCases_v2 import *
 from public_tests import *
 from planar_utils import plot_decision_boundary, sigmoid, load_planar_dataset, load_extra_datasets
 
-# load the dataset 
+# load the dataset
 X, Y = load_planar_dataset()
 
 # Visualize the data:
 plt.scatter(X[0, :], X[1, :], c=Y, s=40, cmap=plt.cm.Spectral);
 
-# get data shape 
+# get data shape
 def layer_sizes(X, Y):
     n_x =  X.shape[0]
     n_h = 4
     n_y = Y.shape[0]
     return (n_x, n_h, n_y)
-    
+
 
 def initialize_parameters(n_x, n_h, n_y):
 
@@ -365,7 +355,7 @@ def initialize_parameters(n_x, n_h, n_y):
                   "b2": b2}
 
     return parameters
-    
+
 
 # forward_propagation
 def forward_propagation(X, parameters):
@@ -388,27 +378,27 @@ def forward_propagation(X, parameters):
              "A2": A2}
 
     return A2, cache
-    
+
 def compute_cost(A2, Y):
-    
+
     m = Y.shape[1] # number of examples
     logprobs = np.multiply(np.log(A2), Y) + np.multiply((1 - Y), np.log(1 - A2))
     cost = - np.sum(logprobs) / m
-    cost = float(np.squeeze(cost))    
+    cost = float(np.squeeze(cost))
 
     return cost
-    
-    
+
+
 def backward_propagation(parameters, cache, X, Y):
-   
+
     m = X.shape[1]
 
     W1 = parameters['W1']
     W2 = parameters['W2']
-    
+
     A1 = cache['A1']
     A2 = cache['A2']
-    
+
     dZ2= A2 - Y
     dW2 = (1 / m) * np.dot(dZ2, A1.T)
     db2 = (1 / m) * np.sum(dZ2, axis=1, keepdims=True)
@@ -422,19 +412,19 @@ def backward_propagation(parameters, cache, X, Y):
              "db2": db2}
 
     return grads
-    
+
 def update_parameters(parameters, grads, learning_rate=1.2):
-   
+
     W1 = parameters['W1']
     b1 = parameters['b1']
     W2 = parameters['W2']
     b2 = parameters['b2']
-   
+
     dW1 = grads['dW1']
     db1 = grads['db1']
     dW2 = grads['dW2']
     db2 = grads['db2']
-    
+
     W1 = W1 - learning_rate * dW1
     b1 = b1 - learning_rate * db1
     W2 = W2 - learning_rate * dW2
@@ -446,26 +436,26 @@ def update_parameters(parameters, grads, learning_rate=1.2):
                   "b2": b2}
 
     return parameters
-    
 
-# train the model 
+
+# train the model
 def nn_model(X, Y, n_h, num_iterations=10000, print_cost=False):
 
     np.random.seed(3)
     n_x = layer_sizes(X, Y)[0]
     n_y = layer_sizes(X, Y)[2]
 
-    
+
     parameters = initialize_parameters(n_x, n_h, n_y)
     W1 = parameters['W1']
     b1 = parameters['b1']
     W2 = parameters['W2']
     b2 = parameters['b2']
-   
+
 
     for i in range(0, num_iterations):
 
-        # values used in backpropagation are stored in a cache.      
+        # values used in backpropagation are stored in a cache.
         A2, cache = forward_propagation(X, parameters)
 
         cost = compute_cost(A2, Y)
@@ -486,14 +476,14 @@ def predict(parameters, X):
     A2, cache = forward_propagation(X, parameters)
     predictions = np.round(A2)
 
-    return predictions 
+    return predictions
 
 
 parameters = nn_model(X, Y, n_h = 4, num_iterations = 10000, print_cost=True)
 # Plot the decision boundary
 plot_decision_boundary(lambda x: predict(parameters, x.T), X, Y)
 # plt.title("Decision Boundary for hidden layer size " + str(4))
-    
+
 \end{lstlisting}
 
 
@@ -510,8 +500,232 @@ plot_decision_boundary(lambda x: predict(parameters, x.T), X, Y)
     \caption{Neural Network Classification Result}
     \end{minipage}
     \end{figure}
+    
+
+    \newpage
+	\subsection{Convolution Neural Network}
+    
+    Convolutional Neural Networks (CNNs), widely used in computer vision, computer vision has a wide range of applications, such as image classification, object detection in self-driving car and surveillance system, and image optimization in mobile phone cameras. When dealing with images, the pixels are fed into the neural network as features. However, since images have three RGB channels and potentially large dimensions, the number of input features can reach several million. This results in significant computational and storage costs, which can be impractical or even infeasible. In addition, an excessive number of parameters can lead to overfitting. To address this challenge, researchers introduced the concept of convolutional operations and subsequently developed convolutional neural networks.
+
+Convolutional Neural Networks are inspired by the biological basis of the brain's visual processing.  if you want to know more, you can search about visual cortex and neocognitron.
+
+In this section, we will comprehensively cover the key components of a Convolutional Neural Network. This includes basic operations such as convolution, along with concepts such as padding and striding, and how they are used to construct convolutional layers. We'll also explore the concept of pooling layers. Finally, we will introduce a seminal CNN model known as LeNet-5.
+
+To provide a concrete visualization of the convolution process, we'll use image processing as an illustrative example. However, once you understand how CNNs work, you can apply them to a wide range of domains, as long as the data has a grid-like distribution. This extends to scenarios beyond images; for example, time series data can be conceptualized as 1-dimensional data.
+
+
+\newpage
+\subsubsection{Components of Convolution Neural Network}
+
+
+\textbf{Convolutional Operation}\\
+\noindent
+The convolution operation is a specialized linear calculation. Consider a 3x3 dimensional matrix as the input and a 2x2 dimensional matrix as the filter or kernel. The convolution operation is illustrated in the Figure 14. The input matrix is also called input feature map, the second matrix is called kernel or filter.
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/sparsity-connection}
+        \caption{Convolution Example}
+     \end{figure}
+
+To calculate each element in the output matrix, refer to the Figure 15. Take the element inside the circle, perform a wise product with the kernel matrix, resulting in a single element in the output matrix. Then move the circle to a new column or row element and repeat the process.
+
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/convolution-compute}
+        \caption{Convolution Operation}
+     \end{figure}
+
+
+Choosing the kernel size and determining the number of kernels has sparked much debate and experimentation. In cases where the problem becomes complex and the input dimensions are large, manually choosing the number of kernels becomes impractical. Instead, we can treat it as parameters and use backpropagation to learn it. This process allows the kernel parameters to absorb the underlying patterns in the data, since it uses the data itself. As a result, the results tend to be superior to manual selection. The automatically learned parameters for the neural network to recognize low-level features of the data. More details will be discussed in later sections.
+
+When it comes to implementing the convolution operation in a programming language, it has already been incorporated into numerous programming languages and deep learning frameworks. So it's convenient to use it in your neural network.
+
+In mathematical notation, the convolution operation is denoted by an asterisk, representing multiplication or element-wise multiplication. However, it's important to note that the asterisk is the standard symbol for denoting convolution operations. Therefore, pay attention to this symbol to avoid possible misunderstandings.\\
+
+
      
+\noindent    
+\textbf{Padding}\\
+\noindent
+If you apply a convolution operation to an n x n dimensional input matrix using an f x f dimensional kernel, the resulting output matrix will have dimensions of $(n - f + 1) x (n - f + 1)$. This technique is particularly useful when dealing with large numbers of pixels, as it allows you to gradually reduce the size of the input matrix.
+
+However, there are still a few challenges. First, the number of convolution operations is limited because each operation reduces the size of the output, and we must ensure that the output does not become too small. Second, the center of the input matrix is used much more than the edges, resulting in underutilized edge information. Padding is the solution to this problem, it involves adding more rows and columns around the edges, and the number of padded edges can be set to zero, as in the Figure 16, and the number of padded edges can be adjusted as needed for the specific problem.
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/padding}
+        \caption{Padding}
+     \end{figure}
+
+
+
+\noindent
+\textbf{Stride}\\
+\noindent 
+In the previous operations, we moved one cell at a time in the input matrix for each calculation. However, it's also possible to move multiple cells at once, as shown in Figure 17, where it moves two steps at a time, indicating a stride of two.
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/strided-conv1}
+        \caption{Stride}
+     \end{figure}
+
+
+
+
+\noindent
+\textbf{Convolution Over Volume}\\
+\noindent
+While the previous examples were in 2D, in practice 3D convolutions are often used because images have three channels (RGB channels). In Figure 18, the input is a 6x6x3 image, where the number three represents the RGB channels. In this scenario, we need to construct a 3D kernel, and the third dimension must match the number of input channels in order to perform the corresponding calculation. We choose a 3x3x3 dimensional kernel, where the dimensions can be thought of as height, width, and channels. To compute the output, we first position the kernel in the upper left corner of the input. The 3x3x3 dimensional portion of the input matrix is called a cube, which is a single unit of computation that yields a number in the output matrix. The detailed operation involves performing multiplications in each dimension, similar to the 2D case. The first dimension of the kernel multiplies the red dimension in the input, the second dimension multiplies the green dimension, and the third dimension multiplies the blue dimension. Then add up all these results to get the first number of the output matrix. This process is repeated as the kernel moves to map the next cube by shifting a column, resulting in another number in the output matrix. This repetition continues until the last cube in the input matrix is reached.
+
+Since the dimension of the kernel corresponds to the dimension of the input matrix, so changing the parameters of each dimension of the kernel will learn the corresponding channels' feature. You can think of each dimension as a 2D matrix, as in the example above, because each channel operates independently.\\
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/conv-3D-full}
+        \caption{Convolution Over Volume}
+     \end{figure}
+
+
+
+
+\noindent
+\textbf{Multi-Kernels}\\
+\noindent
+When we want to extract multiple features and train multiple detectors, because an image contains different features such as edges, corners, blobs, and ridges, so we need multiple kernels. Each kernel with convolution operation can get one dimension out as in above case, so the number of kernels is the third dimension of the output matrix.
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/multi-kernel}
+        \caption{Convolution Operation of Multi Kernel}
+     \end{figure}
      
+
+\newpage
+\subsubsection{The Advantages of Convolutions}
+If we take a 24 x 24 x 3 dimensional image as input and use a 5 x 5 x 3 dimensional kernel with six kernels, the resulting output matrix will be 20 x 20 x 6 in dimensions. In this scenario, the number of parameters for the kernels is 156.
+
+However, if we choose to use forward neural networks instead of convolutions, the number of parameters becomes $(24 * 24 * 3) * (20 * 20 * 6) = 1728 * 2400 $, it's about 4 million. This represents a computational and storage cost that is a ten thousand times greater than using convolutions. Given the relatively small size of the input image in this case, it's not worth spending too many parameters in the small image.
+
+But it's not the only reason to keep the size of parameters small, there are other reasons that convolutions need to run on small size of parameters, which are parameter sharing and sparsity of connections.\\
+
+
+
+\noindent
+\textbf{Parameter Sharing}\\
+\noindent
+In image processing, the same feature detector can be applied to different parts of an image. For example, when training a kernel to detect edges in images, from our intuition we can know that the edge is the pixel's RGB channels change abruptly, A well-trained edge detector can detect this feature in different parts of the image. Thus, a detector can be applied to the entire image as well as to other images, you don't need to train a different kernel for each partition or image, feature detectors can be shared across the entire image dataset.\\
+
+\noindent
+\textbf{Sparsity of Connections}\\
+\noindent
+As shown in Figure 14, the circled element (seven) in the output matrix is only connected to the circled 2 x 2 matrix in the input matrix. It is connected only to the four circled input features, while the rest of other elements have no influence on the output value. This demonstrates the sparsity of the connections.
+
+In addition to these advantages, the convolutional structure maintains the property of translation invariance. This means that an image can be shifted by a number of pixels in different directions, but it remains the same image and can still be recognized. Because the kernel used to convolution different parts of image, it can recognize similar features even if the image is shifted by a few pixels.
+
+
+\newpage
+\subsubsection{Convolution Layer}
+The first step is to perform the convolution operation. After convolving the input with the two kernels, we obtain a 4 x 4 x 2 output. Next, we add a bias, which is a real number, to the output. Following this, we apply a nonlinear function. After these operations, we finally obtain a 4 x 4 x 2 dimensional output matrix. This structure and processing represent one layer of a convolutional neural network.
+
+When comparing it to a standard neural network without a convolutional layer, the parameters of the kernel can be considered as the weight, denoted as $w^{[1]}$, and the input feature map can be thought of as $a^{[0]}$. Thus, the convolution operation essentially performs the same function as $w^{[1]} * a^{[0]}$. The entire process can still be viewed as an activation function unit. The key distinction between a standard neural network and a convolutional neural network lies in the $w * a$ operation, which is the convolution operation in a convolutional neural network.
+
+In a convolutional network, regardless of the size of the input matrix, the size of the parameters remains invariant depend on the size of the kernels. While in some cases one kernel may detect one feature, in others, several kernels may work together to detect a single feature. Therefore, the total number of kernels determines the variety and size of features. Once you have trained several feature detectors, you can apply them to larger images than those in the training dataset, the property can avoid overfitting.
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/one-layer-covn}
+        \caption{One Convolution Layer}
+     \end{figure}
+
+
+\newpage
+\subsubsection{Pooling}
+
+
+To reduce the size of a convolutional neural network and speed up computation, it is beneficial to add a pooling operation.\\
+
+\noindent
+\textbf{Max Pooling}\\
+\noindent
+As shown in Figure 21, the input matrix is divided into partitions determined by the Max Pooling parameter. Then, the maximum element in each partition corresponds to the number in the output matrix. The process is similar to using a 2 x 2 kernel and moving with a stride of two, where both the size of the kernel and the stride serve as parameters for max pooling.
+
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/max-pool}
+        \caption{Max Pooling}
+     \end{figure}
+     
+The pooling parameters do not require training and should be set as hyperparameters before starting training.
+
+Basically, pooling works by examining each partition independently. If a partition has the feature the detector is looking for, the maximum value is selected. Even if the partition lacks the feature, it can still be represented by its maximum value.\\
+
+
+\noindent
+\textbf{Average Pooling}\\
+\noindent
+Average pooling calculates the average of each partition to derive the corresponding input value, as shown in Figure 22.
+
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/max-pool}
+        \caption{Max Pooling}
+     \end{figure}
+
+
+\noindent
+\textbf{Why Pooling ? }\\
+\noindent
+The first obvious advantage of pooling is that it reduces the number of parameters, thereby reducing computational and storage costs, as well as the required processing time.
+
+A second purpose of pooling is to preserve invariance to translations. This means that if we shift the input by a few pixels, most of the pooling output will remain unchanged. In certain scenarios, we are more interested in what the feature is than where it is located. Thus, this invariance to translation proves beneficial because it shifts our attention to the feature itself rather than its location. For example, in face recognition, we may be primarily interested in determining the presence of a face in an image, without requiring precise pixel-level details.
+
+
+\newpage
+\subsubsection{LeNet-5 Architecture}
+
+LeNet-5 is a classic and important neural network architecture in the development of deep learning. It’s used to handwriting digit recognition. By studying LeNet-5, we gain insight into how to integrate the various components mentioned above to construct an effective convolutional neural network.
+
+As shown in Figure 23, LeNet-5 consists of eight layers, including both input and output layers. It uses convolutional and pooling layers, as well as fully connected layers. The fully connected layer is the standard neural network layer as introduced in the last section.
+
+The network takes an image with dimensions of 32 x 32 x 1 as input and produces a vector indicating the digit represented in the input image. Since the input images are grayscale, they have only one channel. The process begins by applying six 5 x 5 filters with a stried of one. This convolutional operation reduces the image dimensions to 28 x 28. A average pooling is then applied with a filter size of two and a stride of two, resulting in a volume of 14 x 14 x 6.
+
+The next step is to pass through a convolutional layer with 16 filters, each 5 x 5, resulting in a 10 x 10 x 16 volume with 16 channels. The volume then passes through another pooling layer to further reduce its size by a factor of two, resulting in a 5 x 5 result that retains 16 channels. This result, equal to 400, send to a fully connected layer with 120 nodes. This is followed by another fully connected layer, this time with 84 nodes. Finally, we apply these 84 features with a softmax function to obtain a final output. This output includes 10 numbers, each representing the probability corresponding to a digit from 0 to 9.
+
+The LeNet-5 architecture was introduced in 1994. Since then, neural networks have many significant developments, leading to possible modifications in their contemporary implementations. However, the basic principles remain the same.
+
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/LeNet-5}
+        \caption{LeNet-5}
+     \end{figure}
+     
+
+\newpage
+\noindent
+\textbf{implementation of a compete convolutional neural network}
+\begin{lstlisting}
+import tensorflow as tf
+import tensorflow.keras.layers as tfl
+
+#you'll hard-code some values such as the stride and kernel sizes.
+
+input_img = tf.keras.Input(shape=input_shape)
+Z1 = tfl.Conv2D(8, 4, activation='linear', padding="same", strides=1)(input_img)
+A1 = tfl.ReLU()(Z1)
+P1 = tfl.MaxPool2D(pool_size=(8, 8), strides=(8, 8), padding='same')(A1)
+Z2 = tfl.Conv2D(16, 2, activation='linear', padding="same", strides=1)(P1)
+A2 = tfl.ReLU()(Z2)
+P2 = tfl.MaxPool2D(pool_size=(4, 4), strides=(4, 4), padding='same')(A2)
+F = tfl.Flatten()(P2)
+outputs = tfl.Dense(6, activation='softmax')(F)
+model = tf.keras.Model(inputs=input_img, outputs=outputs)
+
+\end{lstlisting}
+
 
 \end{document}
 
