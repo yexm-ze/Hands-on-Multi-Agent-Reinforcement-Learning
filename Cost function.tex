@@ -38,7 +38,7 @@
 	\clearpage  % Start new page
     
 	\newpage
-	\section{Chapter 2: Deep Reinforcement Learning }
+	\section{Chapter 2: Deep Learning }
     \setcounter{section}{2}
 
     In this chapter, we begin our journey into deep learning, a field of importance across multiple industries and technical domains. Applications range from computer vision and natural language processing to speech recognition and reinforcement learning, So it's necessary to learn about it.
@@ -53,11 +53,11 @@ With this foundation in place, we'll move on to more complicated operations with
     \newpage
 	\subsection{Cost Function and Gradient Descent}
 
-    In this section, we will explore the core concept of the cost function through a practical example: predicting the click-rate of online products. We'll then learn its mathematical representation. The next question is how to minimize the value of the cost function. This leads us to the gradient descent algorithm, where we'll explore its basic concept and the mathematical techniques for solving it.\\
+    In this section, we will explore the core concept of the cost function through a practical example: predicting the click-rate of online products. We'll then learn its mathematical representation. The next question is how to minimize the value of the cost function. This leads us to the gradient descent algorithm, where we'll explore its basic concept and the mathematical techniques for solving it. 
 
-    \noindent
-    \textbf{Cost Function}\\
-    \noindent
+
+    \newpage
+	\subsubsection{Cost Function}
      We will learn the concept of cost function by solving a prediction problem. The problem is from the online shopping website, As is commonly observed, higher prices for a product lead to fewer clicks, resulting in a lower click rate. Our objective is to construct a model that predicts a product's click rate based on its price. Given a dataset containing various commodities' prices and their corresponding click rates, we can visualize this information in the figure below, with 'x' representing price and 'y' representing click rate.
 
 
@@ -95,12 +95,11 @@ With this foundation in place, we'll move on to more complicated operations with
 
      The square error function is widely used, and in practice, the cost function can be designed depending on specific condition.
 
-    Our next goal is to find appropriate parameters that minimize the cost function J, making it as small as possible. In the next section, we will discuss how to address this challenge.\\
+    Our next goal is to find appropriate parameters that minimize the cost function J, making it as small as possible. In the next section, we will discuss how to address this challenge.
 
 
-    \noindent
-    \textbf{Gradient Descent}\\
-    \noindent
+    \newpage
+	\subsubsection{Gradient Descent}
     To solve the problem of minimizing the cost function your initial instinct might be to employ differentiation and set the result to zero, a method often used to find minimum or maximum of functions. However, this approach isn't always feasible, especially when dealing with a large number of parameters. Thus, we require a more systematic and versatile approach to identify parameters that minimize the cost function. This led to the discovery of the gradient descent algorithm, a highly effective method. It can be applied to a wide range of functions across various algorithms, making it a cornerstone in the field of machine learning.
 
 Let me first introduce the core idea and procedure of gradient descent, followed by presenting its mathematical formulation.
@@ -142,8 +141,12 @@ It's worth noting that some functions may exhibit complex shapes with multiple l
      \newpage
 	\subsection{Neural Network}
 
-    The original concept of artificial intelligence was to create a machine with capabilities similar to the human brain. When we look at the human brain, even that of a ten-year-old child, we see a miracle. Not only does it process visual information and understand language and symbols, but it also formulates complex concepts and strategies. It also has a sense of logic and an understanding of time and space. This formidable organ is the driving force behind the progress of human civilization. Given this, if our goal is to construct an intelligent machine, why not draw inspiration from the human brain? Although a baby's brain lacks complete abilities, it is capable of performing tasks as complex as those of an adult brain through training. So perhaps we can design a machine that emulates the infant brain, coupled with a learning algorithm to teach it. Admittedly, our understanding of how the human brain works is also incomplet. The first hypothesis is that we would need to develop thousands of different algorithms to mimic different part of the brain. A second hypothesis suggesting that the brain functions as a vast neural network governed by a single learning algorithm. Neural rewiring experiments showed that a single piece of biological brain tissue could process visual, auditory, and tactile information. For example, both the auditory cortex and the somatosensory cortex showed the ability to learn to see. This suggested the existence of a universal learning algorithm capable of processing different types of data and autonomously acquiring a variety of skills. It was on this second hypothesis that the neural network was founded and eventually became widely accepted. So nerual netwrok experienced fluctuations in popularity throughout the 1980s and 1990s, followed by a decline in the late 1990s. However, recent years have seen a resurgence, driven by the exponential growth in computing power and data resources. Currently, neural networks are widely used in various industries, ranging from image object recognition, recommendation systems, speech recognition, and more.\\
+    The original concept of artificial intelligence was to create a machine with capabilities similar to the human brain. When we look at the human brain, even that of a ten-year-old child, we see a miracle. Not only does it process visual information and understand language and symbols, but it also formulates complex concepts and strategies. It also has a sense of logic and an understanding of time and space. This formidable organ is the driving force behind the progress of human civilization. Given this, if our goal is to construct an intelligent machine, why not draw inspiration from the human brain? Although a baby's brain lacks complete abilities, it is capable of performing tasks as complex as those of an adult brain through training. So perhaps we can design a machine that emulates the infant brain, coupled with a learning algorithm to teach it. Admittedly, our understanding of how the human brain works is also incomplet. The first hypothesis is that we would need to develop thousands of different algorithms to mimic different part of the brain. A second hypothesis suggesting that the brain functions as a vast neural network governed by a single learning algorithm. Neural rewiring experiments showed that a single piece of biological brain tissue could process visual, auditory, and tactile information. For example, both the auditory cortex and the somatosensory cortex showed the ability to learn to see. This suggested the existence of a universal learning algorithm capable of processing different types of data and autonomously acquiring a variety of skills. It was on this second hypothesis that the neural network was founded and eventually became widely accepted. So nerual netwrok experienced fluctuations in popularity throughout the 1980s and 1990s, followed by a decline in the late 1990s. However, recent years have seen a resurgence, driven by the exponential growth in computing power and data resources. Currently, neural networks are widely used in various industries, ranging from image object recognition, recommendation systems, speech recognition, and more.
 
+
+
+    \newpage
+	\subsubsection{Neuron Model}
 
     \textbf{Biological Neuron}\\
     Neurons are cells in the brain. Each neuron has dendrites, which serve to receive signals from other neurons. In structure and function, dendrites can be compared to the input wires of a system. They transmit information to the cell body, where it is processed. The processed information is then sent to other neurons through the axon, which is like an output wire. This communication between neurons occurs through pulses of electricity known as spikes, which consume little electricity. The axon connects to the dendrites of other neurons, allowing the transmission of spikes to neighboring cells. The message sent by the neuron can be either the processed result or the same information it originally received.
@@ -238,9 +241,8 @@ It's worth noting that some functions may exhibit complex shapes with multiple l
     \end{figure}
 
 
-    \noindent
-    \textbf{Feedforward Neural Network}\\
-    \noindent
+    \newpage
+	\subsubsection{Feedforward Neural Network}
 
     A number of neurals connected together form a neural network like in Figure 9.
 
