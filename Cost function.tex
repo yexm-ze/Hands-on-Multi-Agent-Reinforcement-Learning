@@ -170,7 +170,7 @@ It's worth noting that some functions may exhibit complex shapes with multiple l
     \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.6\textwidth]{figure/neural-model}
-        \caption{Multi Local Minimum Function}
+        \caption{Neural Model}
      \end{figure}
 
     
@@ -564,7 +564,7 @@ However, there are still a few challenges. First, the number of convolution oper
 \noindent
 \textbf{Stride}\\
 \noindent 
-In the previous operations, we moved one cell at a time in the input matrix for each calculation. However, it's also possible to move multiple cells at once, as shown in Figure 17, where it moves two steps at a time, indicating a stride of two.
+In the previous operations, we moved one cell at a time in the input matrix for each calculation. However, it's also possible to move multiple cells at once, as shown in Figure 17, where it moves two steps at a time, indicating a stride of two.\\
 
 \begin{figure}[htbp]
         \centering
@@ -584,7 +584,7 @@ Since the dimension of the kernel corresponds to the dimension of the input matr
 
 \begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.6\textwidth]{figure/conv-3D-full}
+        \includegraphics[width=0.5\textwidth]{figure/conv-3D-full}
         \caption{Convolution Over Volume}
      \end{figure}
 
@@ -636,7 +636,7 @@ In a convolutional network, regardless of the size of the input matrix, the size
 
 \begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.6\textwidth]{figure/one-layer-covn}
+        \includegraphics[width=0.9\textwidth]{figure/one-layer-covn}
         \caption{One Convolution Layer}
      \end{figure}
 
@@ -701,7 +701,7 @@ The LeNet-5 architecture was introduced in 1994. Since then, neural networks hav
 
 \begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.6\textwidth]{figure/LeNet-5}
+        \includegraphics[width=0.9\textwidth]{figure/LeNet-5}
         \caption{LeNet-5}
      \end{figure}
      
@@ -729,6 +729,216 @@ model = tf.keras.Model(inputs=input_img, outputs=outputs)
 \end{lstlisting}
 
 
+\newpage
+\subsection{Recurrent Neural Network}
+
+In the previous section, we learned CNN, a specialized model apply to process grid data like images. It excels at reducing large images to more manageable sizes without compromising detection accuracy. However, just as with images, there are sequential data types such as audio clips and text transcripts that require specific handling. We need a model capable of dealing with original sequential data, mapping it to another sequential format which we need, and efficiently processing large-scale data. Recurrent Neural Networks is proposed for the problem. RNN have found applications in a wide array of scenarios today, from speech recognition and language translation to even music generation and sentiment classification.
+
+This section will guide us through the construction and functioning of RNNs, exploring its forward propagation and backpropagation structures, end up with a practical example with a Python implementation.
+
+\newpage
+\subsubsection{Forward Propagation}
+
+A basic RNN model, shown in Figure 24, differs from the standard neural network in its handling of sequential inputs. It takes the first variable $x_1$, feeds it into the network to produce the output $y_1$. Then it uses the information from the first step to process the second variable. This pattern continues, with each step building on the information gathered in the previous steps. Conceptually, you can imagine that each recurrent neural network has a core recurrent cell that takes in x and updates the RNN's internal hidden state. Subsequently, the updated hidden state interacts with the new input at each step to produce an output. This type of perspective is shown in Figure 25.
+
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/rnn-model}
+        \caption{Recurrent Neural Network Model}
+     \end{figure}
+     
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.2\textwidth]{figure/rnn-model-roll}
+        \caption{Rolled Recurrent Neural Network Model}
+     \end{figure}
+
+Initially, we can make some fake data as the activation at step zero to feed into the first step. Typically, we set this to zero or some random data.
+
+This process makes each step absorb information from previous steps, but the weakness is that it tends to underutilize information from steps further back. For example, when dealing with a sequence of text as input, it's often crucial to consider not only the preceding words, but also the following ones. Certain variants of RNNs are designed to overcome this limitation. If you are interested in this topic, you can learn more by reading special books or papers on RNN.
+
+We can represent the recurrent relation as a self-calling function using the mathematical formula below. It takes the current input $x^{\langle t\rangle}$ and the activation value from the previous step $a^{\langle {t-1}\rangle}$ as inputs. This function is used to update the hidden layer parameters. When moving to the next step t+1, the activation value from the previous step $a^{\langle t\rangle}$ is fed back into the same function.
+
+\hspace*{\fill}
+
+$a^{\langle t\rangle}=f_w\left(a^{\langle {t-1}\rangle}, x^{\langle t\rangle}\right)$\\
+\hspace*{\fill}
+
+The parameters from $x_t$ to the hidden layer are denoted as $W_{ax}$, which is shared across all time steps. Similarly, the parameters between the hidden layers can be expressed as $W_{aa}$, which controls the output activation value, while  $W_{ya}$, represents the parameters controlling the output values. As shown in Figure 26. 
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.7\textwidth]{figure/rnn-param}
+        \caption{Recurrent Neural Network's Parameter}
+     \end{figure}
+
+Taking ${\hat{y}}^{\langle 1\rangle}$ as an example, the procedure for calculating ${\hat{y}}^{\langle 1\rangle}$ is as follows:
+
+\hspace*{\fill}
+
+$\begin{aligned} & a^{\langle 1\rangle}=g_1\left(\omega_{a a} a^{\langle 0\rangle}+\omega_{a x} x^{\langle i\rangle}+b_a\right)\end{aligned}$\\
+\hspace*{\fill}
+
+$\begin{aligned} & {\hat{y}}^{\langle 1\rangle}=g_2\left(\omega_{y a} a^{\langle 1\rangle}+b_y\right) \end{aligned} $\\
+\hspace*{\fill}
+
+
+The value of $a_1$ is determined by four components. The first is the initial activation value, which is usually set to zero and multiplied by the initial parameter matrix $W_{aa}$. The second part is the input value multiplied by the parameter matrix $W_{ax}$. The third part is the bias, and the fourth part is the result of applying the activation function to the sum of the first three parts. Next, $a_1$ is multiplied by the parameters $W_{ya}$ and the bias is added. The result is passed through an activation function represented by $g(x)$ to give the output ${\hat{y}}^{\langle 1\rangle}$. The choice of activation function depends on the desired output. For binary classification, the sigmoid function is appropriate, while softmax is appropriate for multi-classification. The process is then repeated for the next step and so on until all input values have been processed. It's important to note that several parameter matrices are shared across all steps.
+
+The general mathematical expression is shown below. This formula outlines forward propagation in a recurrent neural network.
+
+\hspace*{\fill}
+
+$\begin{aligned} & a^{\langle t\rangle}=g\left(\omega_{a a} a^{\langle t-1\rangle}+\omega_{a x} x^{\langle t\rangle}+b_a\right) \end{aligned}$\\
+\hspace*{\fill}
+
+$\begin{aligned} & \hat{y}^{\langle t\rangle}=g\left(\omega_{ya} a^{\langle t\rangle}+b_y\right)\end{aligned}$\\
+\hspace*{\fill}
+
+The simplified formula below summarizes the above expressions. By using a parameter matrix $W_a$ that encapsulates the information contained in $W_{aa}$ and $W_{ax}$, this expression simplifies the notation for our convenience.
+
+\hspace*{\fill}
+
+$a^{\langle t\rangle}=g\left(\omega_a\left[a^{\langle t-1\rangle}, x^{\langle t\rangle}\right] +b_a\right)$\\
+
+
+\newpage
+\subsubsection{Backpropagation Through Time}
+
+During forward propagation in a recurrent neural network, we obtain output values. To update the parameters, we need to define a cost function that measure the distance between the predicted value and the true value. Let's consider an English sentence such as "recurrent neural network is widely used" that needs to be translated into Chinese. The whole process involves tasks such as data encoding, mapping to a dictionary, and more complex network structures. For this example, however, we'll focus only on backpropagation for clarity. The input is taken one word at a time, along with the corresponding output values.  We can identify whether the input word and output word match in the dictionary. In more complex scenarios, you could define a measure of the distance between the output value and the true value, which would be the Chinese word corresponding to the input English word. Based on this, we use a cost function to compute the loss. We compute the loss for the whole sequence by summing the loss for each word. This process is illustrated in Figure 27, the mathematically represented as follows:
+
+
+\hspace*{\fill}
+
+$L(\hat{y}, y)=\sum_{t=1}^{T_y} L^{<t>}\left(\hat{y}^{<t>}, y^{<t>}\right)$\\
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.4\textwidth]{figure/rnn-loss}
+        \caption{Loss calculation of Recurrent Neural Network}
+     \end{figure}
+
+Once we have defined the cost function, we can use the gradient descent algorithm to find the parameter matrix that minimizes the cost function, and then update the parameter matrix. Backpropagation is from right to left, which is a reverse direction of increasing the time step, so the algorithm is aptly named "backpropagation through time". \\
+
+
+
+
+\noindent 
+\textbf{The code to implement a basic recurrent neural network in Python is below:}
+
+\begin{lstlisting} 
+
+import numpy as np
+from rnn_utils import *
+
+def rnn_cell_forward(xt, a_prev, parameters):
+
+    # Retrieve parameters from "parameters"
+    Wax = parameters["Wax"]
+    Waa = parameters["Waa"]
+    Wya = parameters["Wya"]
+    ba = parameters["ba"]
+    by = parameters["by"]
+
+    # compute next activation state using the formula given above
+    a_next = np.tanh(np.dot(Wax, xt) + np.dot(Waa, a_prev) + ba)
+    # compute output of the current cell using the formula given above
+    yt_pred = softmax(np.dot(Wya, a_next) + by)
+
+    # store values you need for backward propagation in cache
+    cache = (a_next, a_prev, xt, parameters)
+
+    return a_next, yt_pred, cache
+
+def rnn_forward(x, a0, parameters):
+
+    # Initialize "caches" which will contain the list of all caches
+    caches = []
+
+    # Retrieve dimensions from shapes of x and Wy
+    n_x, m, T_x = x.shape
+    n_y, n_a = parameters["Wya"].shape
+    
+    a = np.zeros((n_a, m, T_x))
+    y_pred = np.zeros((n_y, m, T_x))
+    a_next = a0
+
+    # loop over all time-steps
+    for t in range(T_x):
+        a_next, yt_pred, cache = rnn_cell_forward(x[:,:,t], a_next, parameters)
+        a[:,:,t] = a_next
+        y_pred[:,:,t] = yt_pred
+        caches.append(cache)
+
+    caches = (caches, x)
+
+    return a, y_pred, caches
+    
+
+def rnn_cell_backward(da_next, cache):
+    """
+    Implements the backward pass for the RNN-cell (single time-step).
+    da_next -- Gradient of loss with respect to next hidden state
+    cache -- python dictionary containing useful values (output of rnn_cell_forward())
+    """
+
+    # Retrieve values from cache
+    (a_next, a_prev, xt, parameters) = cache
+
+    # Retrieve values from parameters
+    Wax = parameters["Wax"]
+    Waa = parameters["Waa"]
+    Wya = parameters["Wya"]
+    ba = parameters["ba"]
+    by = parameters["by"]
+
+    # compute the gradient 
+    dtanh = (1 - a_next ** 2) * da_next
+    dxt = np.dot(Wax.T, dtanh)
+    dWax = np.dot(dtanh, xt.T)
+    da_prev = np.dot(Waa.T, dtanh)
+    dWaa = np.dot(dtanh, a_prev.T)
+    dba = np.sum(dtanh, axis = 1,keepdims=1)
+
+    gradients = {"dxt": dxt, "da_prev": da_prev, "dWax": dWax, "dWaa": dWaa, "dba": dba}
+
+    return gradients
+
+
+def rnn_backward(da, caches):
+    # da represents gradients of all hidden states
+    
+    # Retrieve values 
+    (caches, x) = caches
+    (a1, a0, x1, parameters) = caches[0]
+    n_a, m, T_x = da.shape
+    n_x, m = x1.shape
+
+    # initialize the gradients 
+    dx = np.zeros((n_x, m, T_x))
+    dWax = np.zeros((n_a, n_x))
+    dWaa = np.zeros((n_a, n_a))
+    dba = np.zeros((n_a, 1))
+    da0 = np.zeros((n_a, m))
+    da_prevt = np.zeros((n_a, m))
+
+
+    # Loop through all the time steps
+    for t in reversed(range(T_x)):
+        gradients = rnn_cell_backward(da[:,:,t] + da_prevt, caches[t])
+        dxt, da_prevt, dWaxt, dWaat, dbat = gradients["dxt"], gradients["da_prev"], gradients["dWax"], gradients["dWaa"], gradients["dba"]
+        dx[:, :, t] = dxt
+        dWax += dWaxt
+        dWaa += dWaat
+        dba += dbat
+
+    da0 = da_prevt
+    gradients = {"dx": dx, "da0": da0, "dWax": dWax, "dWaa": dWaa,"dba": dba}
+    
+    return gradients
+
+\end{lstlisting}
+
 \end{document}
-
-
