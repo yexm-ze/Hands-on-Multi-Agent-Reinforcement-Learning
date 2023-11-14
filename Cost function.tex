@@ -24,6 +24,7 @@
 \usepackage{graphicx}
 \usepackage{mwe}
 \usepackage{verbatim}
+\usepackage{algorithm}
 
 
 \begin{document}
@@ -36,9 +37,9 @@
 	
 	\tableofcontents  % Table of Contents
 	\clearpage  % Start new page
-    
+
 	\newpage
-	\section{Chapter 2: Deep Learning }
+	\section{Chapter 2: Deep Reinforcement Learning }
     \setcounter{section}{2}
 
     In this chapter, we begin our journey into deep learning, a field of importance across multiple industries and technical domains. Applications range from computer vision and natural language processing to speech recognition and reinforcement learning, So it's necessary to learn about it.
@@ -49,11 +50,15 @@ We'll then explore the architecture of neural models, drawing inspiration from b
 
 With this foundation in place, we'll move on to more complicated operations within neural networks that will enable us to tackle more complex challenges. This includes integrating convolutional operations into neural networks to handle grid-based data such as images. In addition, we'll delve into recurrent constructions, allowing us to build recurrent neural networks for processing sequential data, such as audio clips and text sequences. Along with these discussions, we'll provide practical Python implementations for both types of neural networks, ensuring a comprehensive understanding of their basic components and core principles.
 
+After learning the basic concepts about neural networks, we can integrate them with reinforcement learning, giving rise to Deep Reinforcement Learning. In this journey, we'll delve into the foundational structure known as Deep Q-learning (DQN). DQN utilizes a deep neural network as an approximator for the value function. We'll also explore value function approximation in detail to establish a solid foundation for understanding DQN. Subsequently, we will explore two variants of DQN—namely, double DQN and Dueling DQN. We'll discuss their advantages and how they address the drawbacks of the original DQN. Finally, we'll explore Rainbow, a comprehensive combination of six DQN variants. The remaining four variants will be introduced more briefly, including their main ideas and advantages.
+
+This process will lead us to a deeper and more comprehensive understanding of deep reinforcement learning, laying a solid foundation for the subsequent content.
+
 
     \newpage
 	\subsection{Cost Function and Gradient Descent}
 
-    In this section, we will explore the core concept of the cost function through a practical example: predicting the click-rate of online products. We'll then learn its mathematical representation. The next question is how to minimize the value of the cost function. This leads us to the gradient descent algorithm, where we'll explore its basic concept and the mathematical techniques for solving it. 
+    In this section, we will explore the core concept of the cost function through a practical example: predicting the click-rate of online products. We'll then learn its mathematical representation. The next question is how to minimize the value of the cost function. This leads us to the gradient descent algorithm, where we'll explore its basic concept and the mathematical techniques for solving it.
 
 
     \newpage
@@ -152,14 +157,14 @@ It's worth noting that some functions may exhibit complex shapes with multiple l
     Neurons are cells in the brain. Each neuron has dendrites, which serve to receive signals from other neurons. In structure and function, dendrites can be compared to the input wires of a system. They transmit information to the cell body, where it is processed. The processed information is then sent to other neurons through the axon, which is like an output wire. This communication between neurons occurs through pulses of electricity known as spikes, which consume little electricity. The axon connects to the dendrites of other neurons, allowing the transmission of spikes to neighboring cells. The message sent by the neuron can be either the processed result or the same information it originally received.
 
     In simple terms, this is how the human body works. Our sensory organs, such as the eyes and ears, gather information from the external environment. This information is then transmitted to the brain through the interconnected network of neurons using electrical impulses. The brain then processes this information and sends the calculated results to the muscles and other organs. \\
-    
+
     \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.6\textwidth]{figure/biological-neural}
         \caption{Biologic Neural}
      \end{figure}
-    
-    
+
+
     \noindent
     \textbf{Neuron Model}\\
     We can think of a neuron as a computational unit. It receives information from an input structure, performs computations, and transmits the results to other nodes through an output structure.
@@ -173,7 +178,7 @@ It's worth noting that some functions may exhibit complex shapes with multiple l
         \caption{Neural Model}
      \end{figure}
 
-    
+
     \hspace*{\fill}
     \begin{mdframed}[hidealllines=false,backgroundcolor=white!20]
     \textbf{Activation Function}
@@ -502,11 +507,11 @@ plot_decision_boundary(lambda x: predict(parameters, x.T), X, Y)
     \caption{Neural Network Classification Result}
     \end{minipage}
     \end{figure}
-    
+
 
     \newpage
 	\subsection{Convolution Neural Network}
-    
+
     Convolutional Neural Networks (CNNs), widely used in computer vision, computer vision has a wide range of applications, such as image classification, object detection in self-driving car and surveillance system, and image optimization in mobile phone cameras. When dealing with images, the pixels are fed into the neural network as features. However, since images have three RGB channels and potentially large dimensions, the number of input features can reach several million. This results in significant computational and storage costs, which can be impractical or even infeasible. In addition, an excessive number of parameters can lead to overfitting. To address this challenge, researchers introduced the concept of convolutional operations and subsequently developed convolutional neural networks.
 
 Convolutional Neural Networks are inspired by the biological basis of the brain's visual processing.  if you want to know more, you can search about visual cortex and neocognitron.
@@ -546,8 +551,8 @@ When it comes to implementing the convolution operation in a programming languag
 In mathematical notation, the convolution operation is denoted by an asterisk, representing multiplication or element-wise multiplication. However, it's important to note that the asterisk is the standard symbol for denoting convolution operations. Therefore, pay attention to this symbol to avoid possible misunderstandings.\\
 
 
-     
-\noindent    
+
+\noindent
 \textbf{Padding}\\
 \noindent
 If you apply a convolution operation to an n x n dimensional input matrix using an f x f dimensional kernel, the resulting output matrix will have dimensions of $(n - f + 1) x (n - f + 1)$. This technique is particularly useful when dealing with large numbers of pixels, as it allows you to gradually reduce the size of the input matrix.
@@ -563,7 +568,7 @@ However, there are still a few challenges. First, the number of convolution oper
 
 \noindent
 \textbf{Stride}\\
-\noindent 
+\noindent
 In the previous operations, we moved one cell at a time in the input matrix for each calculation. However, it's also possible to move multiple cells at once, as shown in Figure 17, where it moves two steps at a time, indicating a stride of two.\\
 
 \begin{figure}[htbp]
@@ -601,7 +606,7 @@ When we want to extract multiple features and train multiple detectors, because 
         \includegraphics[width=0.6\textwidth]{figure/multi-kernel}
         \caption{Convolution Operation of Multi Kernel}
      \end{figure}
-     
+
 
 \newpage
 \subsubsection{The Advantages of Convolutions}
@@ -610,7 +615,6 @@ If we take a 24 x 24 x 3 dimensional image as input and use a 5 x 5 x 3 dimensio
 However, if we choose to use forward neural networks instead of convolutions, the number of parameters becomes $(24 * 24 * 3) * (20 * 20 * 6) = 1728 * 2400 $, it's about 4 million. This represents a computational and storage cost that is a ten thousand times greater than using convolutions. Given the relatively small size of the input image in this case, it's not worth spending too many parameters in the small image.
 
 But it's not the only reason to keep the size of parameters small, there are other reasons that convolutions need to run on small size of parameters, which are parameter sharing and sparsity of connections.\\
-
 
 
 \noindent
@@ -658,7 +662,7 @@ As shown in Figure 21, the input matrix is divided into partitions determined by
         \includegraphics[width=0.6\textwidth]{figure/max-pool}
         \caption{Max Pooling}
      \end{figure}
-     
+
 The pooling parameters do not require training and should be set as hyperparameters before starting training.
 
 Basically, pooling works by examining each partition independently. If a partition has the feature the detector is looking for, the maximum value is selected. Even if the partition lacks the feature, it can still be represented by its maximum value.\\
@@ -704,7 +708,7 @@ The LeNet-5 architecture was introduced in 1994. Since then, neural networks hav
         \includegraphics[width=0.9\textwidth]{figure/LeNet-5}
         \caption{LeNet-5}
      \end{figure}
-     
+
 
 \newpage
 \noindent
@@ -747,7 +751,7 @@ A basic RNN model, shown in Figure 24, differs from the standard neural network 
         \includegraphics[width=0.6\textwidth]{figure/rnn-model}
         \caption{Recurrent Neural Network Model}
      \end{figure}
-     
+
 
 \begin{figure}[htbp]
         \centering
@@ -766,7 +770,7 @@ We can represent the recurrent relation as a self-calling function using the mat
 $a^{\langle t\rangle}=f_w\left(a^{\langle {t-1}\rangle}, x^{\langle t\rangle}\right)$\\
 \hspace*{\fill}
 
-The parameters from $x_t$ to the hidden layer are denoted as $W_{ax}$, which is shared across all time steps. Similarly, the parameters between the hidden layers can be expressed as $W_{aa}$, which controls the output activation value, while  $W_{ya}$, represents the parameters controlling the output values. As shown in Figure 26. 
+The parameters from $x_t$ to the hidden layer are denoted as $W_{ax}$, which is shared across all time steps. Similarly, the parameters between the hidden layers can be expressed as $W_{aa}$, which controls the output activation value, while  $W_{ya}$, represents the parameters controlling the output values. As shown in Figure 26.
 
 \begin{figure}[htbp]
         \centering
@@ -825,10 +829,10 @@ Once we have defined the cost function, we can use the gradient descent algorith
 
 
 
-\noindent 
+\noindent
 \textbf{The code to implement a basic recurrent neural network in Python is below:}
 
-\begin{lstlisting} 
+\begin{lstlisting}
 
 import numpy as np
 from rnn_utils import *
@@ -860,7 +864,7 @@ def rnn_forward(x, a0, parameters):
     # Retrieve dimensions from shapes of x and Wy
     n_x, m, T_x = x.shape
     n_y, n_a = parameters["Wya"].shape
-    
+
     a = np.zeros((n_a, m, T_x))
     y_pred = np.zeros((n_y, m, T_x))
     a_next = a0
@@ -875,7 +879,7 @@ def rnn_forward(x, a0, parameters):
     caches = (caches, x)
 
     return a, y_pred, caches
-    
+
 
 def rnn_cell_backward(da_next, cache):
     """
@@ -894,7 +898,7 @@ def rnn_cell_backward(da_next, cache):
     ba = parameters["ba"]
     by = parameters["by"]
 
-    # compute the gradient 
+    # compute the gradient
     dtanh = (1 - a_next ** 2) * da_next
     dxt = np.dot(Wax.T, dtanh)
     dWax = np.dot(dtanh, xt.T)
@@ -909,14 +913,14 @@ def rnn_cell_backward(da_next, cache):
 
 def rnn_backward(da, caches):
     # da represents gradients of all hidden states
-    
-    # Retrieve values 
+
+    # Retrieve values
     (caches, x) = caches
     (a1, a0, x1, parameters) = caches[0]
     n_a, m, T_x = da.shape
     n_x, m = x1.shape
 
-    # initialize the gradients 
+    # initialize the gradients
     dx = np.zeros((n_x, m, T_x))
     dWax = np.zeros((n_a, n_x))
     dWaa = np.zeros((n_a, n_a))
@@ -936,9 +940,719 @@ def rnn_backward(da, caches):
 
     da0 = da_prevt
     gradients = {"dx": dx, "da0": da0, "dWax": dWax, "dWaa": dWaa,"dba": dba}
-    
+
     return gradients
 
 \end{lstlisting}
 
+
+\newpage
+	\subsection{Deep Q-Learning}
+
+In Chapter 1, we introduced the basic concepts of reinforcement learning and two classical algorithms: Q-learning and SARSA. However, it's clear that these methods rely on tabular representations of states. In real-world problems, the scale can become too large for tabular approaches to be practical. Even in relatively simple game settings, the number of states can reach $10^{20}$. In more complex games, such as computer Go, the state space can balloon to $10^{170}$. Moreover, in problems involving robots navigating continuous state spaces, the number of states becomes uncountably infinite. In all of these scenarios, the traditional approach of storing a table and assigning a separate value to each state becomes infeasible due to large storage and computation costs. This challenge is particularly pronounced in cases where the underlying Markov Decision Process (MDP) of the environment is unknown, making reliance on value functions alone for action selection impractical. This is where the action value function Q(s, a) comes in. By allowing us to evaluate each action under each state, we can select actions by maximizing Q. However, this requires storing a two-dimensional table of all states and actions, which further increases the storage and computational requirements,  and the massive computation also take a lot of time.
+
+Therefore, finding a solution that reduces the storage and computational burden is paramount. Ideally, we seek a method that can seamlessly handle continuous state spaces, even infinitely large ones, while reducing the overall computational time.
+
+The answer lies in value function approximation. This involves using function approximation to estimate the state space. In this section, we'll delve into this technique, exploring how to find appropriate function approximations and how to update their parameters. And then we will learn about two key technologies that are experience replay and two network structure. These components are the core idea of the Deep Q-Network (DQN). Finally, we'll see how to combine this foundation pieces to construct Deep Q-learning and to handle large state spaces.
+
+Deep Q-learning is a milestone structure in the development of reinforcement learning. Prior to the advent of DQN, numerous attempts were made to integrate deep neural networks into reinforcement learning, but the outcomes were less than optimal. Consequently, DQN stands out as one of the earliest algorithms to successfully incorporate deep neural networks into RL. Notably, its remarkable performance in game tests showed its effectiveness. The technology it introduced continues to be influential until today.
+
+\newpage
+\subsubsection{Value Function Approximation}
+When the state space is so large that it's infeasible to visit and estimate every single state, we need to estimate the unvisited states based on the states we already know. This challenge is especially prevalent in continuous state spaces. To address this, we assume the existence of a true value function $v(s)$ that map s to stat value. We then construct a set of functions to estimate this mapping relationship using all available data, and iteratively update the parameters of these functions until an optimal solution is reached. The input and output of the value function is presents in Figure 28.
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.4\textwidth]{figure/vs}
+        \caption{Input and Output Of value function approximator}
+\end{figure}
+
+In the previous section on loss functions, we examined an example of using a linear function to approximate the relationship between price and click rate. In this section, we do the same thing that to approximate the relationship between state $s_t$, and and state value $v_{\pi}(s_t)$ under policy $\pi$. In the first step to understand value function approximation, given a simple example that the relationship is linear:
+
+\hspace*{\fill}
+
+$\hat{v}(S, \mathbf{w})=\mathbf{x}(S)^{\top} \mathbf{w}=\sum_{j=1}^n \mathbf{x}_j(S) \mathbf{w}_j$ \\
+
+In this formula, the vector $w$ represents the weight vector, $x$ is the feature vector, and $\hat{v}(S,w)$ signifies the value function used to approximate the relationship between state value and state.
+
+By employing this formulation, we can store just two parameter vectors instead of the entire state space. This allows us to generalize to unvisited states by updating parameter vectors, which is a significant advantage compared to the tabular form that only allows updates to visited states. However, the drawback is that the state values are estimated, which may introduce some error compared to the true value.
+
+The linear approximation example provided earlier is a simple case. In more complex scenarios, one can use techniques like neural networks, decision trees, high-order functions, and so forth. Neural networks are particularly prevalent in modern applications of function approximation, especially in cases involving non-linear relationships. We'll discuss deeper into this topic later. It's important to note that while more complex functions may achieve a more accurate fit to the relationship, they also tend to require more parameters.
+
+Let's assume we have a true value function $v(s)$ and an estimated function $\hat{v}(S,w)$. In order to derive an estimated function that best approximates the true value function for each state, we need to adjust the parameter vectors until the discrepancy between them is sufficiently small.
+
+To quantify the gap between  $v(s)$  and $\hat{v}(S,w)$ under all state, we define the objective function, denoted as:
+
+\hspace*{\fill}
+
+$J(\mathbf{w})=\mathbb{E}_\pi\left[\left(v_\pi(S)-\hat{v}(S, \mathbf{w})\right)^2\right]$\\
+
+
+In the preceding section, we introduced the gradient descent algorithm to search for an optimal solution for the objective function, or loss function, as follows:
+
+\hspace*{\fill}
+
+$\nabla_{\mathbf{w}} J(\mathbf{w})=\left(\begin{array}{c}\frac{\partial J(\mathbf{w})}{\partial \mathbf{w}_1} \\ \vdots \\ \frac{\partial J(\mathbf{w})}{\partial \mathbf{w}_n}\end{array}\right)$\\
+
+Using the formulas above in conjunction with the chain rule applied to $J(w)$, we get the gradient descent update rule. These formulas represent parameter updates in the direction of the gradient, scaled by the learning rate.
+
+\hspace*{\fill}
+
+$\mathbf{w}_{t+1}=\mathbf{w_t}-\alpha \nabla_\mathbf{w} J\left(\mathbf{w}\right)$\\
+
+$\begin{aligned} \Delta \mathbf{w} & =-\frac{1}{2} \alpha \nabla_{\mathbf{w}} J(\mathbf{w}) \\ & =\alpha \mathbb{E}_\pi\left[\left(v_\pi(S)-\hat{v}(S, \mathbf{w})\right) \nabla_{\mathbf{w}} \hat{v}(S, \mathbf{w})\right]\end{aligned}$\\
+
+
+In the gradient formula, we need to calculate an expectation, which is equivalent to a full gradient update. To avoid this computational burden, we can employ stochastic gradient descent, which is sampling from the gradient, as denoted in the formula below. The stochastic approximation theory demonstrates that this approach can still minimize the mean square error between the true value and predicted value across the entire dataset.
+
+\hspace*{\fill}
+
+$\Delta \mathbf{w}=\alpha\left(v_\pi(S)-\hat{v}(S, \mathbf{w})\right) \nabla_{\mathbf{w}} \hat{v}(S, \mathbf{w})$\\
+
+\newpage
+\subsubsection{TD Learning with Value Function Approximation}
+
+In the above formula, the true state value function $v(s)$ remains unknown, and in practice, we won't have direct access to it. Hence, we need a way to estimate the true value. There are two methods to achieve this through experience: Monte Carlo and TD learning. Based on Monte Carlo learning, we use the discounted return obtained from sample episodes as an estimate of the true state value. The DQN algorithm employs TD learning to estimate $v(s)$, with the formula as follows:
+
+\hspace*{\fill}
+
+$\Delta \mathbf{w}=\alpha\left(R_{t+1}+\gamma \hat{v}\left(S_{t+1}, \mathbf{w}\right)-\hat{v}\left(S_t, \mathbf{w}\right)\right) \nabla_{\mathbf{w}} \hat{v}\left(S_t, \mathbf{w}\right)$\\
+
+As we learned earlier, TD learning is a biased estimator of the true value function. However, we can update it at each step using TD learning. By utilizing the TD target as an estimate of the true state value, along with the estimated value, we can calculate $\Delta \mathbf{w}$ to update the parameters at each step. This process is similar to making a prediction about the future, then taking a step forward, receiving actual feedback, and using that feedback to adjust parameters. This cycle is repeated. Compared with supervised learning, it’s like $\hat v(s,w)$ is the function we aim to update, the data comes from the TD target, which is $R_{t+1}+\gamma \hat{v}\left(S_{t+1}, \mathbf{w}\right) $. The complete process described in following pseudocode.\\
+
+\begin{algorithm}
+  \caption{TD Learning with Function Approximation}\label{alg:td_learning}
+  \begin{algorithmic}
+    \State \textbf{Initialization:} A function $\hat{v}{(s; w)}$ that is differentiable in $w$.
+     \State Initial parameter $w_0$.
+    \State \textbf{Aim:} Approximate the true state values of a given policy $\pi$.
+    \For{each episode generated following the policy $\pi$}
+      \For{each step $(s_t, r_{t+1}, s_{t+1})$}
+        \State In the general case:
+        \State $\mathbf{w}_{t+1} = \mathbf{w}_t + \alpha_t \left[ r_{t+1} + \gamma \hat{v}{(s_{t+1}; \mathbf{w}_t)} - \hat{v}{(s_t; \mathbf{w}_t)} \right] \nabla_\mathbf{w} \hat{v}{(s_t; \mathbf{w}_t)}$
+        \State In the linear case:
+        \State $\hat{v}(S, \mathbf{w})=\mathbf{x}(S)^{\top} \mathbf{w} $
+        \State $\mathbf{w}_{t+1} = \mathbf{w}_t + \alpha_t \left[ r_{t+1} + \gamma \mathbf{x}^T(s_{t+1})\mathbf{w}_t - \mathbf{x}^T(s_t)\mathbf{w}_t \right]\mathbf{x}(s_t)$
+      \EndFor
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+
+\begin{mdframed}[hidealllines=true,backgroundcolor=gray!20]
+\textbf{Use TD target as estimate of true state value with linear example}\\
+
+Estimate value Function:
+\hspace*{\fill}
+
+$\begin{aligned} \hat{v}(S, \mathbf{w})=\mathbf{x}(S)^{\top} \mathbf{w}=\sum_{j=1}^n \mathbf{x}_j(S) \mathbf{w}_j \end{aligned}$
+
+\hspace*{\fill}
+
+Update parameter vector:
+
+\hspace*{\fill}
+
+$\begin{aligned} \nabla_{\mathbf{w}} \hat{v}(S, \mathbf{w}) & =\mathbf{x}(S) \end{aligned}$
+
+\hspace*{\fill}
+
+$\begin{aligned} \Delta \mathbf{w} & =\alpha\left(v_(S)-\hat{v}(S, \mathbf{w})\right) \mathbf{x}(S)\end{aligned}$
+
+\hspace*{\fill}
+
+Using TD target to replace true value function, which make parameters update in the direction of TD target with learning rate alpha:
+
+\hspace*{\fill}
+
+$\begin{aligned} \Delta \mathbf{w} & =\alpha\left(R+\gamma \hat{v}\left(S^{\prime}, \mathbf{w}\right)-\hat{v}(S, \mathbf{w})\right) \nabla_{\mathbf{w}} \hat{v}(S, \mathbf{w}) \\ & =\alpha \delta \mathbf{x}(S)\end{aligned}$\\
+
+
+\end{mdframed}
+
+\hspace*{\fill}
+
+\noindent
+\textbf{Action-value function approximation}\\
+\noindent
+
+In a model-free scenario, where we do not have precise knowledge of the Markov Decision Process (MDP), determining which action to take becomes a unsolved problem even with the best approximation of the value function. Therefore, we need to find an action-value function approximator that allows us to select actions based on the best action value at each state, that also constructing the optimal policy.
+
+Similar to the concept of the value function, we apply the same principle to the action-value function, changing our focus from the value function to the action-value function. The input and output of the action-value function are shown in Figure 29,and the difference with the tabular method is shown in the figure 30.
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.4\textwidth]{figure/qas}
+        \caption{Input and Output Of action-value function approximator}
+\end{figure}
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.7\textwidth]{figure/compare_table_func}
+        \caption{Compare with tabular method}
+\end{figure}
+
+
+Our goal is to construct a function with parameters $w$ that approximates the action-value function and predicts the accumulated rewards for each state and action. We want to minimize the mean squared error between the approximate value $\hat{q}$ and the true value $q$ under the policy $\pi$ using stochastic gradient descent. This process can be described by the following formula.
+
+The objective function or loss function is defined as:
+
+\hspace*{\fill}
+
+$J(\mathbf{w})=\mathbb{E}_\pi\left[\left(q_\pi(S, A)-\hat{q}(S, A, \mathbf{w})\right)^2\right]$\\
+
+Calculate its gradient using stochastic gradient descent:
+
+\hspace*{\fill}
+
+$\begin{aligned}-\frac{1}{2} \nabla_{\mathbf{w}} J(\mathbf{w}) & =\left(q_\pi(S, A)-\hat{q}(S, A, \mathbf{w})\right) \nabla_{\mathbf{w}} \hat{q}(S, A, \mathbf{w}) \\ \Delta \mathbf{w} & =\alpha\left(q_\pi(S, A)-\hat{q}(S, A, \mathbf{w})\right) \nabla_{\mathbf{w}} \hat{q}(S, A, \mathbf{w})\end{aligned}$\\
+
+And the same problem arises that we do not know the true action value function. To address this, we use Monte Carlo or TD learning to estimate the true function. The underlying principle is similar to value function approximation. The following formula represents TD(0) as the target action value function estimate:
+
+\hspace*{\fill}
+
+$\Delta \mathbf{w}=\alpha\left(R_{t+1}+\gamma \hat{q}\left(S_{t+1}, A_{t+1}, \mathbf{w}\right)-\hat{q}\left(S_t, A_t, \mathbf{w}\right)\right) \nabla_{\mathbf{w}} \hat{q}\left(S_t, A_t, \mathbf{w}\right)$\\
+
+
+
+\begin{comment}
+\begin{algorithm}
+  \caption{Q-learning with function approximation (on-policy version)}\label{alg:policy_search}
+  \begin{algorithmic}
+    \State  Initial parameter vector $w_0$, Initial policy $\pi_0$, Small $\epsilon > 0$.
+    \State  Search a good policy that can lead the agent to the target from an initial state-action pair $(s_0, a_0)$.
+    \For{each episode}
+      %\If{the current $s_t$ is not the target state}
+        \State Take action $a_t$ following $\pi_t(s_t)$, and generate $r_{t+1}$, $s_{t+1}$
+        \State \textbf{Value update (parameter update):}
+        \State $w_{t+1}=w_t+\alpha_t[r_{t+1}+\gamma \max _{a \in \mathcal{A}(s_{t+1})} \hat{q}(s_{t+1}, a, w_t)- $
+        \State  $\hat{q}(s_t, a_t, w_t)] \nabla_w \hat{q}(s_t, a_t, w_t)$
+        \State \textbf{Policy update:}
+        \State $\pi_{t+1}(a \mid s_t)=1-\frac{\varepsilon}{|\mathcal{A}(s)|}(|\mathcal{A}(s)|-1) \text { if } a= \arg \max _{a \in \mathcal{A}(s_t)} \hat{q}(s_t, a, w_{t+1}) $
+        %\State $ $
+        \State $\pi_{t+1}(a \mid s_t)=\frac{\varepsilon}{|\mathcal{A}(s)|} \text { otherwise }$
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+\end{comment}
+
+\newpage
+\subsubsection{Deep Q-Learning}
+
+\noindent
+\textbf{Q-Learning with Function Approximation}\\
+\noindent
+In the previous chapter, we covered Q-learning in detail. In this section, we use function approximation as the TD target. Instead of using a table to store action state values, we use a function approximator to approximate the relationship between action state and action state value. This approach has several advantages, as discussed in the previous section.
+
+The process is outlined in the following pseudocode. The main difference is that we no longer update the $Q(s,a)$ values directly in the table. Instead, we adjust the parameters $w$ to obtain an increasingly refined function approximator, resulting in more accurate action state values, so that we can make informed decisions based on either the $\epsilon$-greedy or the max-greedy algorithm.\\
+
+
+\noindent
+\textbf{Experience Replay in Deep Q-learning}\\
+\noindent
+In the previous sections, we observed that updating parameters at each step relies only on a single data case. However, this approach lacks data efficiency. Ideally, we would like each update to be based on a batch of data, allowing us to find the best possible fit for our function approximator across the entire batch of experiences.
+
+To address this, we introduce the concept of a batch in reinforcement learning, which represents the collective experience of the agent. This includes states, actions, rewards, and next states. All of this information is stored in a large replay buffer called the $D = {(s,a,r,s')}$.
+
+When we sample from this replay buffer, we do so randomly to achieve a uniform distribution. This ensures that each sample has an equal chance of being selected. The reason for this is that the agent has no prior knowledge about the relative importance of different states or actions. Also, in reinforcement learning, the experience sequence is high correlated, and our policy is updated at every step, leading to changes in the target value function, so the value function can by non-stationary.
+
+To deal with this non-stationarity, we need to break the correlation between the training data sequences. The use of non-i.i.d. (independent and identically distributed) data helps to achieve this. By randomly sampling, we can decorrelate the trajectories of each episode, thereby reducing the inter-step relationships. This leads to more stable updates, a significant difference and advantage over naive Q-learning. Another advantage is that we can reuse the samples. Since we're sampling randomly, there's a chance of getting repeated samples. This not only improves the efficiency of data use, but also reduces the pressure to collect new data.\\
+
+
+\noindent
+\textbf{Target Network in Deep Q-Learning}\\
+\noindent
+In the previous section, we discussed Q-learning with function approximation. Now, the question arises: which approximator should we choose to use? There are various methods to consider, including neural networks, decision trees, high-order functions, and more. Many studies have explored this topic, and through experiments, it has been found that using a deep neural network has the best performance in terms of results and data size. DQN uses a neural network as the function approximator.
+
+The loss function of DQN is shown below:
+
+\hspace*{\fill}
+
+$J(w)=\mathbb{E}\left[\left(R+\gamma \max _{a \in \mathcal{A}\left(S^{\prime}\right)} \hat{q}\left(S^{\prime}, a, w\right)-\hat{q}(S, A, w)\right)^2\right]$\\
+
+
+As we can see, there are two parameters in this formula. In tabular Q-learning, it can be computed using a straightforward method. However, when using a neural network, we need to calculate the gradient for updates. The $\hat{q}(s,a,w)$ can be calculated straightforwardly,but the gradient of $\hat{q}(s',a,w)$ presents a challenge.
+
+To handle the problem, In Deep Q-learning, we set $y \doteq R+\gamma \max _{a \in \mathcal{A}\left(S^{\prime}\right)} \hat{q}\left(S^{\prime}, a, w\right)$, and assume $w$ in the formula to be fixed. This process can be denoted by the following formula:
+
+\hspace*{\fill}
+
+$J=\mathbb{E}\left[\left(R+\gamma \max _{a \in \mathcal{A}\left(S^{\prime}\right)} \hat{q}\left(S^{\prime}, a, w_T\right)-\hat{q}(S, A, w)\right)^2\right]$\\
+
+In this form, $J(w)$ has only one parameter variable $w$, making it easier to obtain the gradient related to $w$. And the fixed network called the target network, the continuously updated network is the main network. The gradient is denoted as follows, the formula is the same as in previous section.
+
+\hspace*{\fill}
+
+$\nabla_w J=\mathbb{E}\left[\left(R+\gamma \max _{a \in \mathcal{A}\left(S^{\prime}\right)} \hat{q}\left(S^{\prime}, a, w_T\right)-\hat{q}(S, A, w)\right) \nabla_w \hat{q}(S, A, w)\right]$\\
+
+So in DQN, we maintain two Q networks with different parameter vectors. For some iterations, we only update the main network $q(s,a,w)$, while the target network, updates its parameters after a certain number of interations by copying the main network's parameters. This process is updating towards the target network's value for stable learning. After the Q network undergoes updates, acquiring new information about the environment and policy, we use this information to update the Q target network, guiding the next phase of learning.
+
+If we don't employ the Q target network and use the same network for both the target and Q values, the process becomes unstable because the target and Q values exhibit a strong correlation. It's akin to chasing a moving target, after updating once, the target shifts slightly, especially with neural networks, leading to unstable behavior. This is why we utilize the target network: to prevent unstable updates and maintain a stable target over a defined period. However, the target network also needs to be updated to incorporate new information learned by the main network. Therefore, after the main network undergoes a specified number of updates, we copy the main network's parameters to the target network.
+
+The objective is to train the Q main network towards the Q target network. We sample experiences from the replay buffer and use them to calculate target value $y$. This enables us to obtain the gradient of the loss function and subsequently update the main network's parameters. This process is repeated until we reach the interval at which the target network needs to be updated. These steps continue until a certain number of iterations are completed or the loss falls below a predefined threshold, the complete process will be discussed in the following section.\\
+
+
+\noindent
+\textbf{Deep Q-learning}\\
+\noindent
+
+In the previous sections, we discussed about Q-learning, neural networks, value function approximation, and experience replay. Now that we have all of these components in place, we're ready to put them together to form Deep Q-Learning. If you've followed this chapter carefully, you should now have a solid foundation for understanding the structure of Deep Q-Learning.
+
+In this section, we'll learn how to build Deep Q-Learning by integrating all of these components. We'll use a neural network as a value function approximator, combine it with Q-learning, implement replay buffer for efficient updates, and the target network structure for stable learning.
+
+Here's the overall process, we initialize the parameters of the neural network and the environment, and then start the agent. At each step, the agent chooses an action based on an $\epsilon$-greedy policy represented by a neural network that estimates Q values. We store the action taken, the reward received, the current state, and the next state in the replay buffer. Then, at each step, we randomly sample batches from the replay buffer and use the gradients of the batches to optimize the mean squared error between the Q-values predicted by the main network and the Q-values predicted by the target network. This serves as the Q-learning objective. After a certain number of iterations, we copy the parameters of the main network to the target net. Repeat the process until certain iterations are complete or the loss is below to a certain threshold.
+
+The entire process is illustrated in Figure 31, and the pseudocode is provided in Algorithm 3.
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.7\textwidth]{figure/dqn}
+        \caption{Diagram of Deep Q-learning}
+\end{figure}
+
+\hspace*{\fill}
+
+
+\begin{comment}
+\begin{algorithm}
+\caption{Deep Q-learning with Experience Replay}
+\begin{algorithmic}
+\State Initialize replay memory $D$ to capacity $N$
+\State Initialize action-value function $Q$ with random weights
+%\State Initialize target action-value function $Q*$ with random weights
+\For{episode $= 1, M$}
+    \State Initialize sequence $s_1 = \{x_1\}$ and preprocessed sequence $\varphi_1 = \varphi(s_1)$
+    \For{time step $t = 1, T$}
+        \State With probability $\varepsilon$ select a random action $a_t$
+        \State otherwise select $a_t = \max_a Q^*(\varphi(s_t), a; \theta)$
+        \State Execute action $a_t$ and observe reward $r_t$ and state $x_{t+1}$
+        \State Set $s_{t+1} = s_t, a_t, x_{t+1}$ and preprocess $\varphi_{t+1} = \varphi(s_{t+1})$
+        \State Store transition $(\varphi_t, a_t, r_t, \varphi_{t+1})$ in $D$
+        \State Sample random minibatch of transitions $(\varphi_j , a_j , r_j , \varphi_{j+1})$ from $D$
+        \State Set $y_j = \begin{cases}
+        r_j & \text{for terminal } \varphi_{j+1} \\
+        r_j + \gamma \max_{a_0} Q(\varphi_{j+1}, a_0; \theta) & \text{for non-terminal } \varphi_{j+1}
+        \end{cases}$
+        \State Perform a gradient descent step on $(y_j - Q(\varphi_j , a_j ; \theta))^2$
+    \EndFor
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+\end{comment}
+
+
+
+\begin{algorithm}
+\caption{Deep Q-learning with Experience Replay}
+\begin{algorithmic}
+\State Initialize replay memory $D$ to capacity $N$
+\State Initialize action-value function $Q$ with random weights
+\State Initialize target network weights $w^- \leftarrow w$
+\State Initialize episode counter $n \leftarrow 1$
+\For{episode $= 1, M$}
+    \State Initialize sequence $s_1 = x_1$ and preprocess sequence $\phi_1 = \phi(s_1)$
+    \For{$t = 1, T$}
+        \State With probability $\epsilon$ select a random action $a_t$
+        \State Otherwise, select $a_t = \text{argmax}_a Q(\phi(s_t), a; w)$
+        \State Execute action $a_t$ and observe reward $r_{t+1}$ and next state $x_{t+1}$
+        \State Set $s_{t+1} = x_{t+1}$ and preprocess $\phi_{t+1} = \phi(s_{t+1})$
+        \State Store transition $(\phi_t, a_t, r_{t+1}, \phi_{t+1})$ in $D$
+        \State Sample random minibatch of transitions $(\phi_j, a_j, r_j, \phi_{j+1})$ from $D$
+        \State Set target $y_j = r_j + \gamma \max_{a'} Q(\phi_{j+1}, a'; w^-)$
+        \State Perform a gradient descent step on $(y_j - Q(\phi_j, a_j; w))^2$
+    \EndFor
+    \State Update the target network weights every C steps: $w^- \leftarrow \tau w + (1 - \tau) w^-$
+    \State Increment episode counter $n \leftarrow n + 1$
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+We provide a simplified implementation of DQN algorithm using pytorch, and that is a basic implementation based on the pseudocode above, and if you want to use it, you need to modify it depend on your own environment and requirements.
+
+\begin{lstlisting}
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import random
+import numpy as np
+
+# Define the Q-network model
+class QNetwork(nn.Module):
+    def __init__(self, input_size, output_size):
+        super(QNetwork, self).__init__()
+        self.fc1 = nn.Linear(input_size, 64)
+        self.fc2 = nn.Linear(64, 64)
+        self.fc3 = nn.Linear(64, output_size)
+
+    def forward(self, state):
+        x = torch.relu(self.fc1(state))
+        x = torch.relu(self.fc2(x))
+        return self.fc3(x)
+
+# Initialize replay memory D to capacity N
+replay_memory = []
+replay_memory_capacity = 10000
+
+# Initialize action-value function Q with random weights
+num_actions = 4  # Replace with the actual number of actions in your environment
+input_size =  state_size  # Replace with the actual size of your state
+q_network = QNetwork(input_size, num_actions)
+target_network = QNetwork(input_size, num_actions)
+target_network.load_state_dict(q_network.state_dict())
+
+# Other hyperparameters
+epsilon = 0.1
+gamma = 0.99
+batch_size = 32
+learning_rate = 0.001
+num_episodes = 1000
+max_steps_per_episode = 10000
+update_target_network_freq = 100  # Update target network every C steps
+
+optimizer = optim.Adam(q_network.parameters(), lr=learning_rate)
+
+# Training loop
+for episode in range(num_episodes):
+    state = env.reset()
+
+    for t in range(max_steps_per_episode):
+        # Epsilon-greedy action selection
+        if random.random() < epsilon:
+            action = random.randint(0, num_actions - 1)
+        else:
+            q_values = q_network(torch.FloatTensor([state]))
+            action = torch.argmax(q_values).item()
+
+        # Take action and observe next state and reward
+        next_state, reward, done, _ = env.step(action)
+
+        # Store transition in replay memory
+        replay_memory.append((state, action, reward, next_state, done))
+
+        # Sample random minibatch from replay memory
+        minibatch = random.sample(replay_memory, batch_size)
+        states, actions, rewards, next_states, dones = zip(*minibatch)
+
+        # Convert to PyTorch tensors
+        states = torch.FloatTensor(states)
+        actions = torch.LongTensor(actions)
+        rewards = torch.FloatTensor(rewards)
+        next_states = torch.FloatTensor(next_states)
+        dones = torch.FloatTensor(dones)
+
+        # Update Q-network parameters using gradient descent
+        q_values = q_network(states)
+        target_q_values = target_network(next_states)
+
+        targets = rewards + gamma * torch.max(target_q_values, dim=1).values * (1 - dones)
+        selected_q_values = q_values.gather(1, actions.unsqueeze(1))
+
+        loss = nn.MSELoss()(selected_q_values, targets.unsqueeze(1))
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        # Update target network parameters every C steps
+        if t % update_target_network_freq == 0:
+            target_network.load_state_dict(q_network.state_dict())
+
+        if done:
+            break
+
+        state = next_state
+
+\end{lstlisting}
+
+
+\newpage
+\subsection{DQN Variants and Rainbow}
+
+In this section, we will begin by addressing the overestimation problem identified in DQN. We'll analyze its manifestation through an example and explore methods to rectify it, leading us to the concept of double DQN. We will delve into the core idea behind double DQN and understand how it solves the overestimation problem.
+
+Following that, we'll shift our focus to Dueling DQN, which introduces a novel network structure using the advantage function. This modification enhances the learning process, making it more efficient and robust.
+
+Subsequently, we will introduce Rainbow, a comprehensive framework that combines six variants of DQN. using advanced techniques including prioritized experience replay, multi-step learning, distributional reinforcement learning, and noisy net, Rainbow constructs a new structure that can absorb all of their advantages. We will discuss each of these techniques individually to provide a clearer understanding of Rainbow.
+
+
+\newpage
+\subsubsection{Double DQN}
+
+
+\noindent
+    \textbf{Double Q-learning}\\
+    \noindent
+As we learned in the previous section, Q-learning has many advantages, but people have found that it tends to overestimate the true Q value when applied to practical problems. In other words, there is a systematic error in estimating the Q value. With an increase in training iterations, the value estimation continues to rise, causing the estimated action-state value to be consistently higher than the true value. This problem exists in all naive Q-learning algorithms, and Double Q-learning is proposed to address this issue.
+
+Before delving into the topic of Double Q-learning, let's consider how systematic overestimation arises through a simple and specific example. I'll illustrate this issue with a static example to help you understand how the max operator influences the final result, which is a crucial problem in Q-learning and serves as the basis for Double Q-learning.
+
+\hspace*{\fill}
+
+\begin{mdframed}[hidealllines=true,backgroundcolor=gray!20]
+\textbf{Overestimation phenomenon in the maximum height estimation problem } \\
+Imagine we want to measure the maximum height of 100 people, assuming that all 100 people have the same heights of 160cm. We use a height measuring gauge with a standard deviation of 1cm, meaning it can be off by plus and minus 1cm (symmetrical noise on the measurement). We measure each person's height and record the maximum height. Regardless of how many times we measure, the result is consistently larger than 160cm due to the noise in the measuring process. Essentially, we sample from the noise distribution and select the highest value, which is always greater than zero. Thus, under these conditions, the maximum is biased toward overestimating the true value.
+\end{mdframed}
+
+\hspace*{\fill}
+
+To address the overestimation problem, we introduce a symbolic process: let $X^i$ denote the height of the i'th person, and set $ Y = max_{i}X^i$. The idea is to measure the same person twice, denoted as $X_1^i, X_2^i$. Since the height measuring gauge produces independent noise, the two results are independent, each with its own independent noise. In the first measurement, we identify the person with the highest height, denoted as $n = argmax_{i}(X_1^i)$. Then, we use the second measurement of that person as the estimate of the maximum, denoted as $Y = X^n_2$. For example, if in the first measurement, the 30th person is found to have the highest height, we then take the second measurement of that specific person (the 30th person) as the final result. This approach ensures that the estimate of the maximum is not systematically higher than the true value, as the second measurement of a specific person is independent and may be higher or lower than the true value.
+
+In summary, this process involves using two estimators: the first to determine which person has the highest height, and the second to select that person's second measurement of height.
+
+In both Q-learning and DQN, the same problem arises as illustrated in the example. In the Q-learning sections, the target for the network to update is selected as the maximum value of $Q(s,a)$. And the maximum value of $Q(s,a)$ is not only used as the estimated value of the state but also used to select an action, as shown in the formula:
+
+\hspace*{\fill}
+
+$Q_{t+1}\left(s_t, a_t\right)=Q_t\left(s_t, a_t\right)+\alpha_t\left(s_t, a_t\right)\left(r_t+\gamma \max _a Q_t\left(s_{t+1}, a\right)-Q_t\left(s_t, a_t\right)\right)$\\
+
+Rewrite the target value as:
+
+\hspace*{\fill}
+
+$Y_t^{\mathrm{Q}} \equiv R_{t+1}+\gamma \max _a Q\left(S_{t+1}, a\right)$\\
+
+
+This max operation leads to an overestimation of action-state values, and the overestimate phenomenon is common in practice due to the inherent structure of the algorithm. The idea to fix it remains the same that is to use two estimators, one for action selection (picking the action with the maximum action-state value) and the other for action-state value estimation. Formally, two independent Q-networks, $Q^A$ with parameters $w_a$ and $Q^B$ with parameters $w_b$, are trained with disjoint datasets sampled from experience. When training $Q^A$, instead of just using $Q^A$ to update itself, $Q^B$ is used to choose the maximum action value, Similarly, $Q^B$ is updated in the same way. The process is denoted by the following formulas:
+
+
+\hspace*{\fill}
+
+\begin{mdframed}[hidealllines=false,backgroundcolor=white!20]
+        \textbf{Double Q-learning update:}
+
+\hspace*{\fill}
+
+$a^*=\arg \max _a Q^A\left(s^{\prime}, a\right)$\\
+
+$Q^A(s, a)= Q^A(s, a)+\alpha(s, a)\left(r+\gamma Q^B\left(s^{\prime}, a^*\right)-Q^A(s, a)\right)$ \\
+
+$b^*=\arg \max _a Q^B\left(s^{\prime}, a\right)$\\
+
+$Q^B(s, a) = Q^B(s, a)+\alpha(s, a)\left(r+\gamma Q^A\left(s^{\prime}, b^*\right)-Q^B(s, a)\right)$\\
+
+\end{mdframed}
+
+In the  maximum height estimation example, overestimation is caused by noise, but in DQN or Q-learning, other factors such as environment non-stationarity and function approximation may contribute to it. And the new update mechanism in double Q-learning can generally address all these factors.
+
+
+\hspace*{\fill}
+
+\noindent
+\textbf{Double DQN}\\
+\noindent
+The idea of Double DQN is similar to Double Q-learning—disjointing the max operation in the Q-value update into value evaluation and action selection. Instead of introducing additional networks, as in the case of Double Q-learning, Double DQN makes optimal use of the existing main network and target network. The main network is used to select actions according to a greedy policy under a state, and the target network is used to evaluate the value of the picked action. This can be denoted in the following formula:
+
+\hspace*{\fill}
+
+$Y_t^{\text {DoubleDQN }} \equiv R_{t+1}+\gamma Q\left(S_{t+1}, \operatorname{argmax} Q\left(S_{t+1}, a ; \boldsymbol{w}_t\right), \boldsymbol{w}_t^{'}\right)$\\
+
+The other parts of DQN remain the same, with the target network still requiring a periodic copy from the main network. In the paper proposing Double DQN, several experiments compared Double DQN with DQN have demonstrated that Double DQN exhibits better performance in the value estimation accuracy and policy efficiency. As expected, it avoids the systematic overestimation problem, making the learning process more stable and reliable. And the experiments' result in the "Deep Reinforcement Learning with Double Q-learning" paper compare DQN and Double DQN show in Figure 32, further details of the experiments can be found in that paper.
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figure/ddqn}
+        \caption{Compare DQN and Double DQN on Atari Games}
+     \end{figure}
+
+\newpage
+\subsubsection{Dueling DQN}
+
+\noindent
+\textbf{Advantage Function}\\
+\noindent
+To introduce the idea behind Dueling DQN,let's review the basic problem that reinforcement learning need to solve: the sequential decision problem. The goal is to determine the optimal policy that maximizes cumulative rewards within a given environment, while adhering to predefined rules. To this end, we define V(s) as the state value, estimating the value of each state by accumulating rewards from that state to the endpoint, denoted as $V(s)$ However, in an environment where the Markov Decision Process (MDP) model is unknown and the actions leading to particular states are uncertain, we introduce the action-value function $Q(s,a)$. This function estimates the value of each action under a given state. Based on $Q(s,a)$, we can choose the action that maximizes the Q-value. $Q(s,a)$ encapsulates both the state value and the utility of an action, mixing the two values.
+
+If we use only the Q-value to select actions, a problem arises. It is conceivable that the state value comprises a significant portion of the Q-value. In such cases, the specific action taken may not significantly affect the outcome, resulting in a waste of time and computational resources for each state-action pair. For example, consider the scenario shown in Figure 33 for the Enduro game, it doesn't matter to move left or right when there are no other cars nearby. The action becomes critical only when a collision is going to happen.  In many situations, however, the action can have a significant impact on the return and subsequent state. In some cases, a single action can determine the final outcome. Therefore, we need to find a method that preserves the benefits of the Q-value while minimizing redundant computations. Moreover, the relationship between state and action cannot be adequately expressed by the Q-value alone, so it is important to address this aspect in the network.
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figure/dueling-dqn-scenario}
+        \caption{Scenario in the Enduro Game}
+\end{figure}
+
+
+To address these issues, we introduce the advantage function, defined as the subtraction of the state value from the Q-value, $A(s,a) = Q(s,a) - V(s)$. This function represents the gain of performing a certain action under a given state. After the action, the larger the advantage value, the more advantageous the action.
+
+Let $Q^{\star}(s, a)=\max _\pi Q_\pi(s, a)$, and $V^{\star}(s)=\max _\pi V_\pi(s)$, then $A^{\star}(s,a) = Q^{\star}(s,a) - V^{\star}(s)$
+Then we can get: $Q^{\star}(s,a) = V^{\star}(s) + A^{\star}(s,a)$.
+
+However, this equation is not identifiable. Adding a constant to $Q^{\star}(s,a)$ and subtracting the same constant from $A^{\star}(s,a)$ (eg. $Q^{\star}(s,a) = V^{\star}(s) + c + A^{\star}(s,a) -c )$. This can lead to instability in the training process, as both the value function and the advantage function change to the same extent, and in opposite directions, then you can get the same output . Learning accurate value function and advantage function under such conditions becomes challenging. To address this, we introduce a third term into the equation, which is max, then the new equation is below.
+
+\textbf{Theorem 2}: $Q^{\star}(s,a) = V^{\star}(s) + A^{\star}(s,a) - \max_a A^{\star}(s,a)$
+
+\hspace*{\fill}
+
+\begin{mdframed}[hidealllines=false,backgroundcolor=white!20]
+\textbf{why can we add the maxA(s,a) to the equation?}\\
+
+\textbf{Theorem 1:} $V^{\star}(s) = \max_a Q^{\star}(s,a)$\\
+
+The the definition of the optimal advantage function:\\
+
+$A^{\star}(s,a) = Q^{\star}(s,a) - V^{\star}(s)$\\
+
+Maximize both sides of this equation with respect to a, then we get:\\
+
+$\max_a A^{\star}(s,a) = \max_a Q^{\star}(s,a) - V^{\star}(s)$\\
+
+With theorem 2: $\max_a A^{\star}(s,a) = 0$\\
+\end{mdframed}
+
+\hspace*{\fill}
+
+\noindent
+\textbf{Dueling DQN}\\
+\noindent
+In DQN, after obtaining input vectors, they are first sent to the convolutional layers to extract features. Then, through fully connected layers and a softmax operation, output vectors are generated that represent the Q-values for each action under a given state.
+
+In Dueling DQN, the network structure incorporates the advantage function. It uses the network $A(s,a;w_a)$ to approximate $A^{\star}(s,a)$, and use network $V(s;w_v)$ to approximate $V^{\star}(s)$. The goal is to capture the relationship between the state value and the gain produced by an action, thus providing better estimates for both state and action. To achieve this, the two networks must be combined while maintaining the shape of the final output vector during the training process.
+
+Considering Theorem 1, where the Q-value is the sum of the state value and the advantage value, the output of the Q network becomes the sum of the value network and the gain network, formulated as $Q(s,a;w) = V(s;w_v) + A(s,a;w_a) - \max_a A(s,a;w_a)$.
+
+The network structure is shown in Figure 34. After the input vector passes through convolutional layers and acquires features, these features are separately fed into two fully connected layers to obtain advantage vectors and state values. These are then combined by adding them together, subtracting the maximum of the advantage vectors, resulting in the final vector where each element represents the value of an action. The action with the highest value is selected to execute in the environment.
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figure/dueling-dqn}
+        \caption{Structure of Dueling DQN}
+\end{figure}
+
+
+In practice, the max operator is often replaced by an average, which improves stability because the target moving toward the average is more stable than the maximum. Subtracting the mean value preserves the relative rank of the advantage values, thus preserving the final decision about which action to take. Formulated as $Q(s,a;w) = V(s;w_v) + A(s,a;w_a) - mean_a A(s,a;w_a)$.
+
+The input and output of DQN and Dueling DQN are the same, and their training processes and functions are also the same, with the goal of approximating $Q^{\star}(s,a)$. The main difference lies in the network structure, with Dueling DQN introducing the advantage network to identify the gains brought by actions and the existing state value for all actions. This change leads to faster convergence and better policy in Dueling DQN. A comparison between DQN and Dueling DQN is shown in Figure 35.
+
+\begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/duel-dqn-dqn}
+        \caption{Compare Dueling DQN with DQN}
+\end{figure}
+
+
+\newpage
+\subsubsection{Rainbow}
+
+In addition to the two DQN variants mentioned above, there are other variants, each of which improves the performance of DQN by addressing specific drawbacks. Considering these variants together, it becomes clear that they share a common foundation - the Q-learning framework and deep neural networks. It is possible to integrate all these improvements into a unified structure, and this is what Rainbow does. Rainbow combines six important and complementary variants, including the previously discussed Double DQN and Dueling DQN, along with Prioritized Experience Replay, Multi-Step Learning, Distributional DQN, and Noisy DQN. In this section, we will introduce the remaining four DQN variants, explore their benefits, and then look at how they can be seamlessly integrated, and each component's contribution to the overall results.
+
+\hspace*{\fill}
+
+\noindent
+\textbf{Prioritized Experience Replay}\\
+\noindent
+While Experience Replay effectively addresses the issue of relevant transition sequences and reduces the need for the agent to constantly interact with the environment for training data, it introduces another drawback - uniform sampling, which can slow down updates in certain scenarios. For example, in a robot arm grasping scenario, during the initial random movements, the probability of successfully grasping the target is minimal. The replay buffer contains many error samples, and uniform sampling from this buffer slows down the update process. Intuitively, some samples are more critical for the agent to learn useful information. Giving more weight to these samples would improve the training process, motivating the concept of Prioritized Experience Replay.
+
+The question then arises: how should we assign different weights to these transitions? Frequent transitions already influence the network updates, resulting in a small gap between the current estimate and the estimate of the next step. On the other hand, infrequent transitions require substantial adjustments to the network parameters to adapt to new events, making them more informative. The TD error can express this information - it indicates the difference between the current estimate and the transitions. These transitions with high TD errors should be given more weight to reduce the error.
+
+To implement this idea, we store the TD-error along with each transition in the replay buffer and assign a priority to these transitions. Based on the priority, we assign different probabilities to these transitions.
+
+There are two ways to define the priority of transition i, denoted as $p_i$,  the first way is $p_i = \lvert \delta_i \rvert + \epsilon$, the second way is $p_i = 1 / rank(i)$, $rank(i)$ represents the rank of transition i according to $\lvert \delta_i \rvert$ in the replay buffer. Both methods are monotonic to $\lvert \delta_i \rvert$. Based on the priority of the transition, we can define the probability of sampling transition i:
+
+\hspace*{\fill}
+
+$P(i)=\frac{p_i^\alpha}{\sum_k p_k^\alpha}$
+
+\hspace*{\fill}
+
+This probability calculation ensures that high TD error transitions are sampled more frequently than low TD error transitions. Transitions with low TD error are also sampled to avoid missing information and overfitting.
+
+Similar to uniform sampling from the replay buffer, which changes the distribution of the replay buffer and introduces bias, we must multiply by the importance sampling weight before updating the network parameters. The importance sampling weight is defined as:
+
+\hspace*{\fill}
+
+$w_i=\left(\frac{1}{N} \cdot \frac{1}{P(i)}\right)^\beta$
+
+\hspace*{\fill}
+
+$\beta$ is an adjustable hyperparameter, and the probability of the sampling transition and the weight have a negative correlation, correcting the bias.
+
+\hspace*{\fill}
+
+\noindent
+\textbf{Multi-Step Learning}\\
+\noindent
+DQN use one-step reward to update the estimation of the current state, multi-step variant of DQN use multi-step reward to calculate the loss, and in this way, the learning process can be faster and more stable. The accumulated reward can be represented by the following formulas:
+
+\begin{mdframed}[hidealllines=false,backgroundcolor=white!20]
+\textbf{Accumulated Reward}\\
+
+$G_t=R_t+\gamma \cdot G_{t+1}$.\\
+
+$G_t=R_t+\gamma \cdot R_{t+1}+\gamma^2 \cdot G_{t+2}$\\
+
+$G_t=R_t+\gamma \cdot R_{t+1}+\gamma^2 \cdot R_{t+2}+\gamma^3 \cdot G_{t+3}$.\\
+
+$G_t=\sum_{i=0}^{m-1} \gamma^i \cdot R_{t+i}+\gamma^m \cdot G_{t+m}$\\
+\end{mdframed}
+
+\noindent
+The m-step TD target for DQN is :
+
+\hspace*{\fill}
+
+$y_t=\sum_{i=0}^{m-1} \gamma^i \cdot R_{t+i}+\gamma^m \cdot \max _{a^{\prime}} Q^{\prime}\left(S_{t+m}, a^{\prime}\right)$
+
+\hspace*{\fill}
+
+\noindent
+The loss function is:
+
+\hspace*{\fill}
+
+$J = \left(\sum_{i=0}^{m-1} \gamma^i \cdot R_{t+i}+\gamma^{m} \max _{a^{\prime}} Q^{\prime}\left(S_{t+m}, a^{\prime}\right)-Q\left(S_t, A_t\right)\right)^2$
+
+\hspace*{\fill}
+
+\noindent
+\textbf{Distributional RL}\\
+\noindent
+Distributional Reinforcement Learning (Distributional RL) is a paradigm in reinforcement learning that focuses on estimating the distribution of accumulated rewards, rather than just their expected values. Traditional RL aims to estimate the expectation of the action state value (Q-value), which is essentially the expectation of the sum of the rewards. However, in certain scenarios, understanding the distribution of action-state values is critical, especially in risk-sensitive tasks such as those found in finance.
+
+In distributional RL, the goal is to capture the full range of outcomes and their associated probabilities, providing more detailed information about the uncertainty in the probability distribution.
+
+Let $Z$ be a random variable representing the return of an action under a given state, with its expectation being the Q-value. $Z(s,a)$ is the distribution of the action value for a action under state s, and is referred to as the value distribution. The distributional Bellman equation is given by $Z(s, a) \stackrel{D}{=} R(s, a)+\gamma Z\left(S^{\prime}, A^{\prime}\right).$
+
+A specific algorithm in distributional RL is C51, which models the entire distribution of returns as a categorical distribution. It discretizes the returns into a set of bins and learns the probability mass function for those bins. But for continuous range, it is difficult to learn the probabilities, so we define a set of discrete values mapping to these bins called "atoms", denoted as discrete support $z$ with $N_{atoms}$, and define $z^i=v_{\min }+(i-1) \frac{v_{\max }-v_{\min }}{N_{\text {atoms }}-1}$. Dividing the return range by these bins, then we just need to learn the probability of each atom.
+
+The probability mass of each atom, denoted by $p_\theta^i\left(S_t, A_t\right)$, the distribution $d_t$ at time t, defined as $d_t=\left(\boldsymbol{z}, \boldsymbol{p}_\theta\left(S_t, A_t\right)\right).$
+
+For updating, C51 focuses on updating the distribution of each atom based on the distributional Bellman equation. The goal is to update the distribution to approximate the actual distribution of returns. The loss function measures the gap between the predicted categorical distribution and the target distribution derived from the distributional Bellman equation denoted as:
+
+\hspace*{\fill}
+
+$d_t^{\prime} \equiv\left(R_{t+1}+\gamma_{t+1} \boldsymbol{z}, \quad \boldsymbol{p}_{\bar{\theta}}\left(S_{t+1}, \bar{a}_{t+1}^*\right)\right)$\\
+
+$\bar{a}_{t+1}^*=\operatorname{argmax}_a q_{\bar{\theta}}\left(S_{t+1}, a\right)$
+
+\hspace*{\fill}
+
+And using the Kullbeck-Leibler divergence to measure the gap between $d_t$ and $d^{\prime}_t$, The loss function is represented as $D_{\mathrm{KL}}\left(\Phi_{\boldsymbol{z}} d_t^{\prime} \| d_t\right)$, where $\Phi$ is the L2 projection of the target distribution onto the substrate $z$, and KL is the Kullback-Leibler divergence.
+
+Distributional RL allows for a more complete representation of the return space, avoiding the cancellation of important information by expected values. It provides a more accurate and robust learning process, as demonstrated in experiments such as Atari games.
+
+\hspace*{\fill}
+
+\noindent
+\textbf{Noisy Net}\\
+\noindent
+The core concept behind Noisy DQN is the introduction of parametric noise into the network weights to enhance exploration. While the epsilon greedy policy provides exploration capabilities, it may not be sufficient for extensive exploration, especially in scenarios that require numerous steps to achieve positive rewards. Previous methods have often been used for small state-action spaces or simple approximators. However, in the context of neural networks or more complex scenarios, a novel approach is required to address the exploration challenge and accelerate the learning process.
+
+Considering a linear layer of a neural network, expressed as $y=wx+b$, parametric noise is added to it, in which $\epsilon$ is a non-zero vector with a stable distribution, denoted below:
+
+\hspace*{\fill}
+
+$\boldsymbol{y}=(\boldsymbol{b}+\mathbf{W} \boldsymbol{x})+\left(\boldsymbol{b}_{\text {noisy }} \odot \epsilon^b+\left(\mathbf{W}_{\text {noisy }} \odot \epsilon^w\right) \boldsymbol{x}\right)$
+
+\hspace*{\fill}
+
+\noindent
+\textbf{Rainbow}\\
+\noindent
+Rainbow combines the advantages of different DQN variants into a unified architecture. It uses DQN as the basic model and incorporates modifications such as TD target adjustment through multi-step learning, prioritized sampling from replay memory based on TD error, using the C51 architecture to estimate the distribution of the entire return space, adding parameterized noise to the network weights for more extensive and faster exploration, and incorporating an advantage function into the network structure. It also adopts the modification of double DQN to reduce overestimation.
+
+While Rainbow does not introduce a novel concept, it systematically integrates the strengths of advanced techniques in deep reinforcement learning. It is well structured and implemented in an engineering sense, and experimental results show that Rainbow exhibits faster and more stable learning, even in complex environments, compared to individual DQN variants.
+
+
 \end{document}
+
+
+
